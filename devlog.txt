@@ -1,0 +1,51 @@
++Team TheTriumvirate
++Mansour Elsharawy
++Andrew Qu
++Jason Lam
++pd 5
++---------------------
++ANGERY BIRBS!
++
++devlog
++Use keyboard shortcut to jump to end,
++ replicate entry template,
++ modify appropriately.
++
++zone of reflection
++Flesh out each category whenever necessary, appropriate.
++ Need not be fully filled in until end of project,
++ but best done as you go along.
++
++
++/////////// Zone of Reflection \\\\\\\\\\\
++------------------------------------------
++OBSTACLES OVERCOME
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++wow we so BOSS bc...
+
++UNRESOLVED ISSUES
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++ 
++COOL STUFF LEARNED
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++MID-DEVELOPMENT DESIGN CHANGES
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++ 
+
++LESSONS LEARNED
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
+
++ ______   ______   __   __   __       ______   _______     
++/_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\    
++\:::_ \ \\::::_\/_\:\ \\ \ \\:\ \    \:::_ \ \\::::__\/__  
++ \:\ \ \ \\:\/___/\\:\ \\ \ \\:\ \    \:\ \ \ \\:\ /____/\ 
++  \:\ \ \ \\::___\/_\:\_/.:\ \\:\ \____\:\ \ \ \\:\\_  _\/ 
++   \:\/.:| |\:\____/\\ ..::/ / \:\/___/\\:\_\ \ \\:\_\ \ \ 
++    \____/_/ \_____\/ \___/_(   \_____\/ \_____\/ \_____\/ 
++==============================================================
++
++
++==============================================================
++2017-05-19
