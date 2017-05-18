@@ -1,19 +1,25 @@
 class Birb{
  
+  final float initX;
+  final float initY;
   float x;
   float y;
   float dx;
   float dy;
   float rad;
   color c;
+  boolean launched;
   
   Birb(){
     x = 200;
     y = 200;
+    initX = x;
+    initY = y;
     dx = 0;
-    dy = -10;
+    dy = 0;
     rad = 20;
     c = color(255);
+    launched = false;
     ellipse(x,y,rad,rad);
   }
   
@@ -32,8 +38,9 @@ class Birb{
     if( dist(x,y,mouseX,mouseY) > rad ){
       return;
     }
-    dx = 5;
-    dy = -5;
+    launched = true;
+    dx = -(x - initX) / 10;
+    dy = -(y - initY) / 10;
   }
   
   void move(){
@@ -41,7 +48,8 @@ class Birb{
       y = height;
       dy *= -1;
     }
-    dy += grav;
+    if(launched)
+      dy += grav;
     x += dx;
     y += dy;
     ellipse(x,y,rad,rad);
