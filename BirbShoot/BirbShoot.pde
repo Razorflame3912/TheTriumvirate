@@ -1,5 +1,6 @@
 Birb b;
-float grav = .5;
+float grav = .2;
+float maxPull = 50;
 
 void setup(){
   background(0);
