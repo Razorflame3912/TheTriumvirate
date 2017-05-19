@@ -1,4 +1,4 @@
-class Birb{
+abstract class Birb{
  
   //used to calculate amount of pullback
   final float initX;
@@ -87,5 +87,5 @@ class Birb{
     y += dy;
     ellipse(x,y,rad,rad);
   }
-  
+  abstract void special();
 }
