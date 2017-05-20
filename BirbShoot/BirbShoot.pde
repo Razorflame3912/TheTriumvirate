@@ -1,4 +1,4 @@
-YellowBirb b;
+Birb b;
 
 float grav = .2;
 float maxPull = 50;
