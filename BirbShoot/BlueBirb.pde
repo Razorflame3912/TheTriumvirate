@@ -6,15 +6,17 @@ class BlueBirb extends Birb{
   
   BlueBirb(){
     super();
-    c = color(0,0,255);
-    fill(c);
-    ellipse(x,y,rad,rad);
+    loadedBirb = loadImage("img/blue_birb.png");
+    loadedBirb.resize(40,40);
+    image(loadedBirb, x, y);
+    whichBirb = 1;
   }
   //constructor for new BlueBirbs
   BlueBirb(float newx,float newy,float newdx,float newdy){
    super();
-   c = color(0,0,255);
-   fill(c);
+   loadedBirb = loadImage("img/blue_birb.png");
+   loadedBirb.resize(40,40);
+   whichBirb = 1;
    launched = true;
    x = newx;
    y = newy;
@@ -33,7 +35,9 @@ class BlueBirb extends Birb{
       dy += grav;
     x += dx;
     y += dy;
-    ellipse(x,y,rad,rad);  
+    loadedBirb = loadImage("img/yellow_birb.png");
+    loadedBirb.resize(40,40);
+    whichBirb = 1;  
     if ( up != null && down != null ){
       up.move();
       down.move();

@@ -2,9 +2,10 @@ class RedBirb extends Birb{
  
   RedBirb(){
     super();
-    c  = color(255,0,0);
-    fill(c);
-    ellipse(x,y,rad,rad);
+    loadedBirb = loadImage("img/red_birb.png");
+    loadedBirb.resize(50,50);
+    image(loadedBirb, x, y);
+    whichBirb = 0;
   }
   void special(){
     return;

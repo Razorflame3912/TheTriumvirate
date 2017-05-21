@@ -9,25 +9,22 @@ abstract class Birb{
   //velocity in x and y directions
   float dx;
   float dy;
-  //radius and color
-  float rad;
-  color c;
+  //image
+  PImage loadedBirb;
+  int whichBirb;
   //state variables
   boolean pulled;
   boolean launched;
   
   Birb(){
-    x = 200;
-    y = 200;
+    x = 100;
+    y = 260;
     initX = x;
     initY = y;
     dx = 0;
     dy = 0;
-    rad = 20;
-    c = color(255);
     pulled = false;
     launched = false;
-    ellipse(x,y,rad,rad);
   }
   
   void drag(){
@@ -45,13 +42,26 @@ abstract class Birb{
       pulled = true;
       x = mouseX;
       y = mouseY;
-      fill(c);
-      ellipse(x,y,rad,rad);
+      if (whichBirb == 0) {
+        loadedBirb = loadImage("img/red_birb.png");
+        loadedBirb.resize(50,50);
+        image(loadedBirb, x, y);
+      }
+      if (whichBirb == 1) {
+        loadedBirb = loadImage("img/blue_birb.png");
+        loadedBirb.resize(40,40);
+        image(loadedBirb, x, y);
+      }
+      if (whichBirb == 2) {
+        loadedBirb = loadImage("img/yellow_birb.png");
+        loadedBirb.resize(50,50);
+        image(loadedBirb, x, y);
+      }
     }
   }
   //returns whether the mouse is over the birb
   boolean onBirb(){
-   return dist(x,y,mouseX,mouseY) <= rad; 
+   return dist(x,y,mouseX,mouseY) <= 50; 
   }
   
   //repositions birb towards the mouse
@@ -85,7 +95,21 @@ abstract class Birb{
       dy += grav;
     x += dx;
     y += dy;
-    ellipse(x,y,rad,rad);
+    if (whichBirb == 0) {
+      loadedBirb = loadImage("img/red_birb.png");
+      loadedBirb.resize(50,50);
+      image(loadedBirb, x, y);
+    }
+    if (whichBirb == 1) {
+      loadedBirb = loadImage("img/blue_birb.png");
+      loadedBirb.resize(50,50);
+      image(loadedBirb, x, y);
+    }
+    if (whichBirb == 2) {
+      loadedBirb = loadImage("img/yellow_birb.png");
+      loadedBirb.resize(50,50);
+      image(loadedBirb, x, y);
+    }
   }
   abstract void special();
 }

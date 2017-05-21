@@ -1,10 +1,11 @@
 class YellowBirb extends Birb{
- 
+
   YellowBirb(){
    super();
-   c = color(255,255,0);
-   fill(c);
-   ellipse(x,y,rad,rad);
+   loadedBirb = loadImage("img/yellow_birb.png");
+   loadedBirb.resize(50,50);
+   image(loadedBirb, x, y);
+   whichBirb = 2;
   }
   void special(){
    dx *= 3;
