@@ -50,3 +50,14 @@
 +==============================================================
 +2017-05-19
 +Andrew - Birb subclasses
++==============================================================
++2017-05-21
++Mansour - momentum with circles
++Jason - implemented images
++==============================================================
++2017-05-22
++Mansour, Andrew, Jason - discussed how to implement collision of bird/block/pigs.
+
+
+
+
