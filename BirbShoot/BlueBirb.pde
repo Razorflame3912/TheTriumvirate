@@ -14,8 +14,6 @@ class BlueBirb extends Birb{
   //constructor for new BlueBirbs
   BlueBirb(float newx,float newy,float newdx,float newdy){
    super();
-   loadedBirb = loadImage("img/blue_birb.png");
-   loadedBirb.resize(30,30);
    whichBirb = 1;
    launched = true;
    x = newx;

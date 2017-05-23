@@ -5,7 +5,6 @@ float maxPull = 50;
 int gameScreen;
 
 void setup(){
-  background(0);
   size(800,400);
   b = new BlueBirb();
 }
@@ -29,29 +28,14 @@ void mousePressed(){
   }
 }
 
-PImage bg;
-PImage slingshot;
-
 void draw(){
  
  if (gameScreen == 0) {
-   bg = loadImage("img/titlescreen.png");
-   
-   bg.resize(800,400);
-   
-   background(bg);
-   
+   titleScreen();
  }
   
  if (gameScreen == 1) {
-   bg = loadImage("img/background.png");
-   slingshot = loadImage("img/slingshot.png");
-   
-   bg.resize(800,400);
-   slingshot.resize(100,100);
-   
-   background(bg);
-   image(slingshot, 50, 275);
+   gameScreen();
    b.move();
  }
  
@@ -59,4 +43,21 @@ void draw(){
    
  }
  
+}
+
+PImage bg;
+PImage slingshot;
+
+void titleScreen() {
+  bg = loadImage("img/titlescreen.png");
+  background(bg);
+}
+
+void gameScreen() {
+  bg = loadImage("img/background.png");
+  bg.resize(800,400);
+  background(bg);
+  slingshot = loadImage("img/slingshot.png");
+  slingshot.resize(100,100);
+  image(slingshot, 50, 275);
 }

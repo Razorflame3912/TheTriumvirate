@@ -42,10 +42,10 @@ abstract class Birb{
       towardsMouse(maxPull);
     }
     else{
-      background(0);
       pulled = true;
       x = mouseX;
       y = mouseY;
+      /*
       if (whichBirb == 0) {
         loadedBirb = loadImage("img/red_birb.png");
         loadedBirb.resize(50,50);
@@ -60,7 +60,7 @@ abstract class Birb{
         loadedBirb = loadImage("img/yellow_birb.png");
         loadedBirb.resize(50,50);
         image(loadedBirb, x, y);
-      }
+      }*/
     }
   }
   //returns whether the mouse is over the birb
@@ -100,6 +100,7 @@ abstract class Birb{
       dy += grav;
     x += dx;
     y += dy;
+    /*
     if (whichBirb == 0) {
       loadedBirb = loadImage("img/red_birb.png");
       loadedBirb.resize(50,50);
@@ -115,6 +116,7 @@ abstract class Birb{
       loadedBirb.resize(50,50);
       image(loadedBirb, x, y);
     }
+    */
   }
   abstract void special();
 }
