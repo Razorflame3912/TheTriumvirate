@@ -57,6 +57,8 @@
 +==============================================================
 +2017-05-22
 +Mansour, Andrew, Jason - discussed how to implement collision of bird/block/pigs.
++Andrew - various bugfixes to Birb.special() and BlueBirb graphics
+
 
 
 
