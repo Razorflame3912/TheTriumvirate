@@ -11,8 +11,8 @@ void setup() {
     balls[x] = new Ball();
     balls[x].x = 300;
     balls[x].y = 20;
-    balls[x].dx = 0.5;
-    balls[x].dy = 0.5;
+    balls[x].dx = 2.75;
+    balls[x].dy = 2.75;
   }
   block = new Block(50, 300, 100, 100);
 }

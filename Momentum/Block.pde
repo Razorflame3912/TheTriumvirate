@@ -13,12 +13,12 @@ class Block {
     for (int x = 0; x < subs.length; x++) {
       subs[x] = new Ball();
       Ball b =  subs[x];
-      b.mass = 1;
+      b.mass = 10;
       b.rad = rad;
       b.y = ycor;
       b.x = xnow;
       xnow += rad;
-      b.dx = 0;
+      b.dx = -1;
       b.dy = 0;
     }
   }
@@ -40,8 +40,8 @@ class Block {
 
       for (int x = subs.length-1; x>=0; x--) {
         Ball now = subs[x];
-        now.dx = b.dx + (xincrement * (subs.length - 1 - x));
-        now.dy = b.dy + (yincrement * (subs.length - 1 - x));
+        now.dx += b.dx + (xincrement * (subs.length - 1 - x));
+        now.dy += b.dy + (yincrement * (subs.length - 1 - x));
         //    now.x += now.dx;
         //    now.y += now.dy;
       }
