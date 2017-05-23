@@ -15,6 +15,7 @@ abstract class Birb{
   //state variables
   boolean pulled;
   boolean launched;
+  boolean collided;
   
   Birb(){
     x = 100;
@@ -25,6 +26,7 @@ abstract class Birb{
     dy = 0;
     pulled = false;
     launched = false;
+    collided = false;
   }
   
   void drag(){
@@ -87,8 +89,9 @@ abstract class Birb{
   void move(){
     //bounced off bottom edge
     if ( y > height ){
+      collided = true;
       y = height;
-      dy *= -1;
+      dy *= -0.5;
     }
     //only have gravity act when birb is in the air, not on the "slingshot"
     if(launched)

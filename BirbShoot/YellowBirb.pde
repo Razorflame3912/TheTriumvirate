@@ -8,6 +8,8 @@ class YellowBirb extends Birb{
    whichBirb = 2;
   }
   void special(){
+    if(collided)
+      return;
    dx *= 3;
    dy *= 3;
   }
