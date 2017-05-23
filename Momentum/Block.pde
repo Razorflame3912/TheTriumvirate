@@ -18,7 +18,7 @@ class Block {
       b.y = ycor;
       b.x = xnow;
       xnow += rad;
-      b.dx = -1;
+      b.dx = 0;
       b.dy = 0;
     }
   }
@@ -54,13 +54,14 @@ class Block {
     float slope = (me.y - you.y)/(me.x - you.x);
     you.x = me.x;
     you.y = me.y;
-    while (dist(me.x, me.y, you.x, you.y) < (me.rad/2 + you.rad/2)) {
+    while (dist(me.x, me.y, you.x, you.y) < (me.rad / 2 + you.rad / 2)) {
       if (dir > 0) {
-        you.x += 1/100;
+        you.x += 1;
+        you.y += slope;
       } else {
-        you.x -= 1/100;
+        you.x -= 1;
+        you.y -= slope;
       }
-      you.y += slope/100;
     }
   }
 
@@ -70,16 +71,16 @@ class Block {
         b.x += b.dx;
         b.y += b.dy;
       }
-/*      int i = 0;
+      int i = 0;
       while (subs.length/2 + i + 1 < subs.length) {
         stickMe(subs[subs.length/2 + i], subs[subs.length/2 + i + 1], 1);
         i++;
       }
       int j = 0;
-      while (subs.length/2 - j - 1 >= 0) {
-        stickMe(subs[subs.length/2 - j], subs[subs.length/2 - j - 1], -1);
-        j--;
-      }*/
+      while ((subs.length/2) - j - 1 >= 0) {
+        stickMe(subs[(subs.length/2) - j], subs[(subs.length/2) - j - 1], -1);
+        j++;
+      }
     }
   }
 }

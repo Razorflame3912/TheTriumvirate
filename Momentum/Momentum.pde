@@ -9,10 +9,10 @@ void setup() {
   balls = new Ball[1];
   for (int x=0; x < balls.length; x++) {
     balls[x] = new Ball();
-    balls[x].x = 300;
+    balls[x].x = 350;
     balls[x].y = 20;
-    balls[x].dx = 2.75;
-    balls[x].dy = 2.75;
+    balls[x].dx = 0;
+    balls[x].dy = 3;
   }
   block = new Block(50, 300, 100, 100);
 }
