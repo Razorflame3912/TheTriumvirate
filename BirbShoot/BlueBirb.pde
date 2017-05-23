@@ -45,7 +45,7 @@ class BlueBirb extends Birb{
   }
   
   void special(){
-    if(collided)
+    if(collided || specialed)
       return;
     up = new BlueBirb(x,y,dx,dy + 1);
     down = new BlueBirb(x,y,dx,dy - 1);    

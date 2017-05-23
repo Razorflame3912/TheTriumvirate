@@ -8,9 +8,12 @@ class YellowBirb extends Birb{
    whichBirb = 2;
   }
   void special(){
-    if(collided)
+    if(collided || specialed)
       return;
-   dx *= 3;
-   dy *= 3;
+    else{
+      dx *= 3;
+      dy *= 3;
+      specialed = true;
+    }
   }
 }

@@ -16,6 +16,7 @@ abstract class Birb{
   boolean pulled;
   boolean launched;
   boolean collided;
+  boolean specialed;
   
   Birb(){
     x = 100;
@@ -27,6 +28,7 @@ abstract class Birb{
     pulled = false;
     launched = false;
     collided = false;
+    specialed = false;
   }
   
   void drag(){
