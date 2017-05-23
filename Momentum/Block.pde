@@ -23,32 +23,42 @@ class Block {
     }
   }
 
-  boolean collision() {
-    float xincrement = 0;
-    float yincrement = 0;
-    Ball b = subs[subs.length-1];
-    if (b.collision()) {
-      xincrement = abs(2 * b.dx/subs.length);
-      yincrement = abs(2 * b.dy/subs.length);
-
-      if (b.dx > 0) {
-        xincrement *= -1;
+  /*boolean collision() {
+   float xincrement = 0;
+   float yincrement = 0;
+   Ball b = subs[subs.length-1];
+   if (b.collision()) {
+   xincrement = abs(2 * b.dx/subs.length);
+   yincrement = abs(2 * b.dy/subs.length);
+   
+   if (b.dx > 0) {
+   xincrement *= -1;
+   }
+   if (b.dy > 0) {
+   yincrement *= -1;
+   }
+   
+   for (int x = subs.length-1; x>=0; x--) {
+   Ball now = subs[x];
+   now.dx += b.dx + (xincrement * (subs.length - 1 - x));
+   now.dy += b.dy + (yincrement * (subs.length - 1 - x));
+   //    now.x += now.dx;
+   //    now.y += now.dy;
+   }
+   return true;
+   }
+   return false;
+   }*/
+   
+   void influenceOthers(int index){
+     int center  = subs.length/2;
+     if(center == index){
+      for(Ball b: subs){
+       b.dx += subs[index].dx;
+       b.dy += subs[index].dy;
       }
-      if (b.dy > 0) {
-        yincrement *= -1;
-      }
-
-      for (int x = subs.length-1; x>=0; x--) {
-        Ball now = subs[x];
-        now.dx += b.dx + (xincrement * (subs.length - 1 - x));
-        now.dy += b.dy + (yincrement * (subs.length - 1 - x));
-        //    now.x += now.dx;
-        //    now.y += now.dy;
-      }
-      return true;
-    }
-    return false;
-  }
+     }
+   }
 
   void stickMe(Ball me, Ball you, int dir) {
     float slope = (me.y - you.y)/(me.x - you.x);
@@ -66,10 +76,10 @@ class Block {
   }
 
   void update() {
-    if (!collision()) {
-      for (Ball b : subs) {
-        b.x += b.dx;
-        b.y += b.dy;
+    //if (!collision()) {
+      for (int x = 0;x<subs.length;x++) {
+        subs[x].update();
+        influenceOthers(x);
       }
       int i = 0;
       while (subs.length/2 + i + 1 < subs.length) {
@@ -81,6 +91,6 @@ class Block {
         stickMe(subs[(subs.length/2) - j], subs[(subs.length/2) - j - 1], -1);
         j++;
       }
-    }
+   // }
   }
 }
