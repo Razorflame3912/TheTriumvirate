@@ -6,9 +6,6 @@ class BlueBirb extends Birb{
   
   BlueBirb(){
     super();
-    loadedBirb = loadImage("img/blue_birb.png");
-    loadedBirb.resize(30,30);
-    image(loadedBirb, x, y);
     whichBirb = 1;
   }
   //constructor for new BlueBirbs

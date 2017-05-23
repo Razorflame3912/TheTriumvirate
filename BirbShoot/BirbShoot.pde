@@ -6,7 +6,7 @@ int gameScreen;
 
 void setup(){
   size(800,400);
-  b = new BlueBirb();
+  b = new YellowBirb();
 }
 
 void mouseDragged(){

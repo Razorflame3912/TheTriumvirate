@@ -61,6 +61,7 @@ abstract class Birb{
         loadedBirb.resize(50,50);
         image(loadedBirb, x, y);
       }*/
+      
     }
   }
   //returns whether the mouse is over the birb
