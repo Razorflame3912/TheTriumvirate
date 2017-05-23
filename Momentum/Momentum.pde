@@ -1,19 +1,20 @@
-Block[] blocks;
-float grav = .3;
+Ball[] balls;
+float grav = 0.5;
+float inelastic = .99;
 void setup(){
   size(700,700);
   background(0);
   stroke(0);
-  blocks = new Block[50];
-  for(int x=0; x < blocks.length; x++){
-    blocks[x] = new Block();
+  balls = new Ball[5];
+  for(int x=0; x < balls.length; x++){
+    balls[x] = new Ball();
   }
   
 }
 
 void draw(){
   background(0);
-  for(Block b: blocks){
+  for(Ball b: balls){
    fill(b.c);
    b.update();
    ellipse(b.x,b.y,b.rad,b.rad);
