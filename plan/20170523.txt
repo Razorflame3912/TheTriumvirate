@@ -1,0 +1,13 @@
+TODAY'S PLANS FOR REALIZING OUR GOALS:
+
+Primary objective:
+
+(Core functionality) Implement class Level, which contains an array of Blocks. When a Level is "loaded" each Block should appear in its appropriate position.
+
+(Core functionality) Implement class Block, several of which will be instantiated in each level in order create the stage. A Block will appear as a rectangle of certain dimensions, but implemented as a tight group of circles for easier and more accurate collision detection. Collision of a single circle with another block should change the circle's direction appropriately, as well as change the direction of every other circle in relation to the first. Each Block should have a health variable, which will be decremented upon collision with a Birb, another Block, or the bottom of the screen.
+
+Secondary objective:
+
+(Non-essential) Implement more Birb subclasses, namely the exploding Black Birb, the bomb-dropping White Birb, and Terrence.
+
+(Non-essential) Add state variable "collided" to Birb class which, if true, will prevent the use of special().
