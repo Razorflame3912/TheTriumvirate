@@ -50,12 +50,12 @@ class Ball {
           dy = (((mass-b.mass)/(mass+b.mass)) * dy ) + (((2*b.mass)/(mass+b.mass)) * b.dy) * inelastic + grav;
           b.dx = (((b.mass-mass)/(mass+b.mass)) * b.dx ) + (((2*mass)/(mass+b.mass)) * dxtemp) * inelastic;
           b.dy = (((b.mass-mass)/(mass+b.mass)) * b.dy ) + (((2*mass)/(mass+b.mass)) * dytemp) * inelastic + grav;
-          if (x > b.x && y > b.y) {
+          if (x >= b.x && y >= b.y) {
             while (dist(x, y, b.x, b.y) < (rad/2 + b.rad/2)) {
               x++;
               y++;
             }
-          } else if (x < b.x && y > b.y) {
+          } else if (x < b.x && y >= b.y) {
             while (dist(x, y, b.x, b.y) < (rad/2 + b.rad/2)) {
               x--;
               y++;
