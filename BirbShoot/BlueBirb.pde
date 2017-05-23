@@ -7,7 +7,7 @@ class BlueBirb extends Birb{
   BlueBirb(){
     super();
     loadedBirb = loadImage("img/blue_birb.png");
-    loadedBirb.resize(40,40);
+    loadedBirb.resize(30,30);
     image(loadedBirb, x, y);
     whichBirb = 1;
   }
@@ -15,7 +15,7 @@ class BlueBirb extends Birb{
   BlueBirb(float newx,float newy,float newdx,float newdy){
    super();
    loadedBirb = loadImage("img/blue_birb.png");
-   loadedBirb.resize(40,40);
+   loadedBirb.resize(30,30);
    whichBirb = 1;
    launched = true;
    x = newx;
@@ -49,7 +49,8 @@ class BlueBirb extends Birb{
     if(!launched || collided || specialed)
       return;
     up = new BlueBirb(x,y,dx,dy + 1);
-    down = new BlueBirb(x,y,dx,dy - 1);    
+    down = new BlueBirb(x,y,dx,dy - 1);  
+    specialed = true;
   }
   
 }
