@@ -11,11 +11,11 @@ void setup(){
 }
 
 void mouseDragged(){
- b.drag(); 
+  b.drag(); 
 }
 
 void mouseReleased(){
- b.shoot(); 
+  b.shoot(); 
 }
 
 void mouseClicked(){

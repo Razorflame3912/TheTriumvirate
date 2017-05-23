@@ -8,7 +8,8 @@ class YellowBirb extends Birb{
    whichBirb = 2;
   }
   void special(){
-    if(collided || specialed)
+    //unable to use special power after being hit or using it already
+    if(!launched || collided || specialed)
       return;
     else{
       dx *= 3;

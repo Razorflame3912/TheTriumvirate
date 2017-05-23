@@ -28,16 +28,17 @@ class BlueBirb extends Birb{
     //bounced off bottom edge
     if ( y > height ){
       y = height;
-      dy *= -1;
+      dy *= -0.5;
     }
     //only have gravity act when birb is in the air, not on the "slingshot"  
     if(launched)
       dy += grav;
     x += dx;
     y += dy;
-    loadedBirb = loadImage("img/yellow_birb.png");
+    loadedBirb = loadImage("img/blue_birb.png");
     loadedBirb.resize(40,40);
-    whichBirb = 1;  
+    image(loadedBirb,x,y);
+    //whichBirb = 1;  
     if ( up != null && down != null ){
       up.move();
       down.move();
@@ -45,7 +46,7 @@ class BlueBirb extends Birb{
   }
   
   void special(){
-    if(collided || specialed)
+    if(!launched || collided || specialed)
       return;
     up = new BlueBirb(x,y,dx,dy + 1);
     down = new BlueBirb(x,y,dx,dy - 1);    
