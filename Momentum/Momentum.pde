@@ -1,18 +1,20 @@
 Ball[] balls;
 Block block;
 float grav = 0;
-float inelastic = .99;
+float inelastic = 0.99;
 void setup() {
   size(700, 700);
   background(0);
   stroke(0);
+  frameRate(120);
   balls = new Ball[1];
   for (int x=0; x < balls.length; x++) {
     balls[x] = new Ball();
-    balls[x].x = 350;
-    balls[x].y = 20;
-    balls[x].dx = 0;
-    balls[x].dy = 3;
+    balls[x].x = 50;
+    balls[x].y = 50 + ((x%2) * 300);
+    balls[x].dx = 3;
+    balls[x].dy = 3 + ((x%2) * -6);
+    balls[x].mass = 1;
   }
   block = new Block(50, 300, 100, 100);
 }

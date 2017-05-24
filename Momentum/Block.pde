@@ -49,48 +49,81 @@ class Block {
    }
    return false;
    }*/
-   
-   void influenceOthers(int index){
-     int center  = subs.length/2;
-     if(center == index){
-      for(Ball b: subs){
-       b.dx += subs[index].dx;
-       b.dy += subs[index].dy;
-      }
-     }
-   }
 
-  void stickMe(Ball me, Ball you, int dir) {
-    float slope = (me.y - you.y)/(me.x - you.x);
-    you.x = me.x;
-    you.y = me.y;
-    while (dist(me.x, me.y, you.x, you.y) < (me.rad / 2 + you.rad / 2)) {
-      if (dir > 0) {
-        you.x += 1;
-        you.y += slope;
-      } else {
-        you.x -= 1;
-        you.y -= slope;
+  void influenceOthers(int index) {
+    int center  = subs.length/2;
+    float bigdx = 0;
+    float bigdy = 0;
+    float xincrement = 0;
+    float yincrement = 0;
+    float dxtemp = 0;
+    float dytemp = 0;
+    if (center == index && false) {
+      for (Ball b : subs) {
+        b.dx += subs[index].dx;
+        b.dy += subs[index].dy;
+      }
+    } else {
+      bigdx = (index-center)*(subs[index].dx/center); 
+      bigdy = (index-center)*(subs[index].dy/center);
+      if (subs[index].dx < 0) {
+        bigdx*=-1;
+      }
+      if (subs[index].dy < 0) {
+        bigdy*=-1;
+      }
+
+
+      xincrement = subs[index].dx/center;
+      yincrement = subs[index].dy/center;
+      if (bigdx > 0) {
+        xincrement *= -1;
+      }
+      if (bigdy > 0) {
+        yincrement *= -1;
+      }
+      dxtemp = subs[center].dx + subs[index].dx;
+      dytemp = subs[center].dy + subs[index].dy;
+      subs[index].dx = 0;
+      subs[index].dy = 0;
+      for (int i = subs.length-1; i>=0; i--) {
+        Ball now = subs[i];
+        now.dx = bigdx + (xincrement * (subs.length - 1 - i)) + dxtemp;
+        now.dy = bigdy + (yincrement * (subs.length - 1 - i)) + dytemp + grav;
       }
     }
   }
 
+  void stickMe(Ball me, Ball you) {
+    float distance = dist(me.x, me.y, you.x, you.y);
+    float x1 = you.x - me.x;
+    float y1 = you.y - me.y;
+    float x2 = (me.rad * x1)/distance;
+    float y2 = (me.rad * y1)/distance;
+    you.x = me.x + x2;
+    you.y = me.y + y2;
+  }
+
   void update() {
     //if (!collision()) {
-      for (int x = 0;x<subs.length;x++) {
-        subs[x].update();
+    for (int x = 0; x<subs.length; x++) {
+      if (subs[x].collision()) {
         influenceOthers(x);
+      } else {
+        subs[x].x += subs[x].dx;
+        subs[x].y += subs[x].dy + grav;
       }
-      int i = 0;
-      while (subs.length/2 + i + 1 < subs.length) {
-        stickMe(subs[subs.length/2 + i], subs[subs.length/2 + i + 1], 1);
-        i++;
-      }
-      int j = 0;
-      while ((subs.length/2) - j - 1 >= 0) {
-        stickMe(subs[(subs.length/2) - j], subs[(subs.length/2) - j - 1], -1);
-        j++;
-      }
-   // }
+    }
+    int i = 0;
+    while (subs.length/2 + i + 1 < subs.length) {
+      stickMe(subs[subs.length/2 + i], subs[subs.length/2 + i + 1]);
+      i++;
+    }
+    int j = 0;
+    while ((subs.length/2) - j - 1 >= 0) {
+      stickMe(subs[(subs.length/2) - j], subs[(subs.length/2) - j - 1]);
+      j++;
+    }
+    // }
   }
 }
