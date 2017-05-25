@@ -3,9 +3,11 @@ Birb b;
 float grav = .2;
 float maxPull = 50;
 int gameScreen;
+int points;
 
 void setup(){
   size(800,400);
+  points = 0;
   b = new YellowBirb();
 }
 
@@ -54,10 +56,14 @@ void titleScreen() {
 }
 
 void gameScreen() {
+  text(points, 20, 20);
   bg = loadImage("img/background.png");
   bg.resize(800,400);
   background(bg);
   slingshot = loadImage("img/slingshot.png");
   slingshot.resize(100,100);
   image(slingshot, 50, 275);
+}
+
+void gameOverScreen() {
 }
