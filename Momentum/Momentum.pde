@@ -10,10 +10,10 @@ void setup() {
   balls = new Ball[1];
   for (int x=0; x < balls.length; x++) {
     balls[x] = new Ball();
-    balls[x].x = 50;
-    balls[x].y = 50 + ((x%2) * 300);
+    balls[x].x = 150;
+    balls[x].y = 50 + ((x%2+1) * 300);
     balls[x].dx = 3;
-    balls[x].dy = 3 + ((x%2) * -6);
+    balls[x].dy = 1 + ((x%2+1) * -6);
     balls[x].mass = 1;
   }
   block = new Block(50, 300, 100, 100);

@@ -50,7 +50,7 @@ class Block {
    return false;
    }*/
 
-  void influenceOthers(int index) {
+  void influenceOthers(int index, float centerdxb, float centerdyb) {
     int center  = subs.length/2;
     float bigdx = 0;
     float bigdy = 0;
@@ -58,10 +58,14 @@ class Block {
     float yincrement = 0;
     float dxtemp = 0;
     float dytemp = 0;
-    if (center == index && false) {
-      for (Ball b : subs) {
-        b.dx += subs[index].dx;
-        b.dy += subs[index].dy;
+    float centerdx = subs[center].dx;
+    float centerdy = subs[center].dy;
+    if (center == index) {
+      for (int x = 0; x<subs.length; x++) {
+        if (x != center) {
+          subs[x].dx += (centerdx - centerdxb);
+          subs[x].dy += (centerdy - centerdyb);
+        } 
       }
     } else {
       bigdx = (index-center)*(subs[index].dx/center); 
@@ -89,7 +93,7 @@ class Block {
       for (int i = subs.length-1; i>=0; i--) {
         Ball now = subs[i];
         now.dx = bigdx + (xincrement * (subs.length - 1 - i)) + dxtemp;
-        now.dy = bigdy + (yincrement * (subs.length - 1 - i)) + dytemp + grav;
+        now.dy = bigdy + (yincrement * (subs.length - 1 - i)) + dytemp;
       }
     }
   }
@@ -106,9 +110,12 @@ class Block {
 
   void update() {
     //if (!collision()) {
+      int center = subs.length/2;
+    float centerdx = subs[center].dx;
+    float centerdy = subs[center].dy;
     for (int x = 0; x<subs.length; x++) {
       if (subs[x].collision()) {
-        influenceOthers(x);
+        influenceOthers(x,centerdx,centerdy);
       } else {
         subs[x].x += subs[x].dx;
         subs[x].y += subs[x].dy + grav;

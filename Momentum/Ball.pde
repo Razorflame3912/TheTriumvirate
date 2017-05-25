@@ -47,30 +47,10 @@ class Ball {
           dxtemp = dx;
           dytemp = dy;
           dx = (((mass-b.mass)/(mass+b.mass)) * dx ) + (((2*b.mass)/(mass+b.mass)) * b.dx) * inelastic;
-          dy = (((mass-b.mass)/(mass+b.mass)) * dy ) + (((2*b.mass)/(mass+b.mass)) * b.dy) * inelastic + grav;
+          dy = (((mass-b.mass)/(mass+b.mass)) * dy ) + (((2*b.mass)/(mass+b.mass)) * b.dy) * inelastic;
           b.dx = (((b.mass-mass)/(mass+b.mass)) * b.dx ) + (((2*mass)/(mass+b.mass)) * dxtemp) * inelastic;
-          b.dy = (((b.mass-mass)/(mass+b.mass)) * b.dy ) + (((2*mass)/(mass+b.mass)) * dytemp) * inelastic + grav;
-          if (x >= b.x && y >= b.y) {
-            while (dist(x, y, b.x, b.y) < (rad/2 + b.rad/2)) {
-              x++;
-              y++;
-            }
-          } else if (x < b.x && y >= b.y) {
-            while (dist(x, y, b.x, b.y) < (rad/2 + b.rad/2)) {
-              x--;
-              y++;
-            }
-          } else if (x < b.x && y < b.y) {
-            while (dist(x, y, b.x, b.y) < (rad/2 + b.rad/2)) {
-              x--;
-              y--;
-            }
-          } else {
-            while (dist(x, y, b.x, b.y) < (rad/2 + b.rad/2)) {
-              x++;
-              y--;
-            }
-          }    
+          b.dy = (((b.mass-mass)/(mass+b.mass)) * b.dy ) + (((2*mass)/(mass+b.mass)) * dytemp) * inelastic;
+          stickMe(this, b);
 
 
           return true;
@@ -78,6 +58,16 @@ class Ball {
       }
     }
     return false;
+  }
+
+  void stickMe(Ball me, Ball you) {
+    float distance = dist(me.x, me.y, you.x, you.y);
+    float x1 = you.x - me.x;
+    float y1 = you.y - me.y;
+    float x2 = (me.rad * x1)/distance;
+    float y2 = (me.rad * y1)/distance;
+    you.x = me.x + x2;
+    you.y = me.y + y2;
   }
 
   void update() {
