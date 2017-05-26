@@ -7,6 +7,7 @@ int points;
 
 void setup(){
   size(800,400);
+  gameScreen = 0;
   points = 0;
   b = new YellowBirb();
 }
@@ -28,6 +29,9 @@ void mousePressed(){
   && gameScreen == 0) {
     gameScreen = 1;
   }
+  if (mouseX > 355 && mouseX < 450 && mouseY > 260 && mouseY < 317 && gameScreen == 2){
+    gameScreen = 1;
+  }
 }
 
 void draw(){
@@ -42,7 +46,7 @@ void draw(){
  }
  
  if (gameScreen == 2) {
-   
+   gameOverScreen();
  }
  
 }
@@ -56,14 +60,22 @@ void titleScreen() {
 }
 
 void gameScreen() {
-  text(points, 20, 20);
   bg = loadImage("img/background.png");
   bg.resize(800,400);
   background(bg);
   slingshot = loadImage("img/slingshot.png");
   slingshot.resize(100,100);
   image(slingshot, 50, 275);
+  textSize(20);
+  text(points, 20, 30);
+  fill(0);
 }
 
 void gameOverScreen() {
+  bg = loadImage("img/gameoverscreen.png");
+  bg.resize(800,400);
+  background(bg);
+  textSize(20);
+  text(points, 542, 175);
+  fill(0);
 }
