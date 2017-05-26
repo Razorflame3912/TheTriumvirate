@@ -2,6 +2,7 @@ Ball[] balls;
 Block block;
 float grav = 0;
 float inelastic = 0.99;
+Level L;
 void setup() {
   size(700, 700);
   background(0);
@@ -17,6 +18,9 @@ void setup() {
     balls[x].mass = 1;
   }
   block = new Block(50, 300, 100, 100);
+  L = new Level();
+  L.addBlock(block);
+  //L.addBlock(new Block(50,300,150,100) );
 }
 
 void draw() {
@@ -26,9 +30,17 @@ void draw() {
     b.update();
     ellipse(b.x, b.y, b.rad, b.rad);
   }
+  //Ball last = block.subs[block.subs.length - 1];  
+  //float xcor = last.x;
+  //float ycor = last.y;
+  
   block.update();
   for (Ball b : block.subs) {
     fill (b.c);
     ellipse(b.x, b.y, b.rad, b.rad);
   }
+  //Ball last = block.subs[block.subs.length - 1];
+
+  L.loadBlocks();
+  //translate(last.x - xcor,last.y - ycor);
 }
