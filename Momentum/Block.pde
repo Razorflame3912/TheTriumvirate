@@ -20,6 +20,7 @@ class Block {
       xnow += rad;
       b.dx = 0;
       b.dy = 0;
+      b.inBlock = true;
     }
   }
 
@@ -65,7 +66,7 @@ class Block {
         if (x != center) {
           subs[x].dx += (centerdx - centerdxb);
           subs[x].dy += (centerdy - centerdyb);
-        } 
+        }
       }
     } else {
       bigdx = (index-center)*(subs[index].dx/center); 
@@ -98,6 +99,36 @@ class Block {
     }
   }
 
+  void influenceOthersB(int index, float centerdxb, float centerdyb, float currentxb, float currentyb) {
+    float changex, changey;
+    float xdiff = 0;
+    float ydiff = 0;
+    changex = changey = 0;
+    if (subs[index].x == subs[index].rad/2 || subs[index].x == width - subs[index].rad/2) {
+      changex = centerdxb * -1;
+      xdiff = subs[index].x - currentxb;
+    } else {
+      changey = centerdyb * -1;
+      ydiff = subs[index].y - currentyb;
+    }
+    for (int i = 0; i < subs.length; i++) {
+      subs[i].dx += changex;
+      subs[i].dy += changey;
+      if (i != index) {
+        if (changex < 0) {
+          subs[i].x += xdiff;
+        } else {
+          subs[i].x -= xdiff;
+        }
+        if (changey < 0) {
+          subs[i].y += ydiff;
+        } else {
+          subs[i].y-=ydiff;
+        }
+      }
+    }
+  }
+
   void stickMe(Ball me, Ball you) {
     float distance = dist(me.x, me.y, you.x, you.y);
     float x1 = you.x - me.x;
@@ -110,13 +141,18 @@ class Block {
 
   void update() {
     //if (!collision()) {
-      int center = subs.length/2;
+    int center = subs.length/2;
     float centerdx = subs[center].dx;
     float centerdy = subs[center].dy;
+    float currentx, currenty;
     for (int x = 0; x<subs.length; x++) {
+      currentx = subs[x].x;
+      currenty = subs[x].y;
       if (subs[x].collision()) {
-        influenceOthers(x,centerdx,centerdy);
-      } else {
+        influenceOthers(x, centerdx, centerdy);
+      } /*else if (subs[x].bounce()) {
+        influenceOthersB(x, centerdx, centerdy, currentx, currenty);
+      }*/ else {
         subs[x].x += subs[x].dx;
         subs[x].y += subs[x].dy + grav;
       }

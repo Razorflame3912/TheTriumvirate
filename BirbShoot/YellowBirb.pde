@@ -1,35 +1,35 @@
-class YellowBirb extends Birb{
+class YellowBirb extends Birb {
 
-  YellowBirb(){
-   super();
-   whichBirb = 2;
+  YellowBirb() {
+    super();
+    whichBirb = 2;
+    loadedBirb = loadImage("img/yellow_birb.png");
+    loadedBirb.resize(50, 50);
   }
-  
-  void move(){
+
+  void move() {
     //bounced off bottom edge
-    if ( y > height ){
+    if ( y > height ) {
       y = height;
       dy *= -0.5;
     }
     //only have gravity act when birb is in the air, not on the "slingshot"  
-    if(launched)
+    if (launched)
       dy += grav;
-      
+
     x += dx;
     y += dy;
-    
-    loadedBirb = loadImage("img/yellow_birb.png");
-    loadedBirb.resize(50,50);
-    image(loadedBirb,x,y);
-    whichBirb = 2;  
-    
+
+
+    image(loadedBirb, x, y);
+    whichBirb = 2;
   }
-  
-  void special(){
+
+  void special() {
     //unable to use special power after being hit or using it already
-    if(!launched || collided || specialed)
+    if (!launched || collided || specialed)
       return;
-    else{
+    else {
       dx *= 3;
       dy *= 3;
       specialed = true;

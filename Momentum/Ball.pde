@@ -1,6 +1,7 @@
 class Ball {
   float x, y, dx, dy, mass, rad, red, blue, green;
   color c;
+  boolean inBlock;
 
   Ball() {
     x = random(height);
@@ -13,11 +14,14 @@ class Ball {
     blue = random(255);
     green = random(255);
     c = color(red, blue, green);
+    inBlock = false;
   }
 
   boolean bounce() {
     if (x + rad/2 > width || x - rad/2 < 0) {
+      if(!inBlock){
       dx *= -1 * inelastic;
+      }
       if (x + rad/2 > width) {
         x = width - rad/2;
       } else {
@@ -27,7 +31,9 @@ class Ball {
     }
 
     if (y + rad/2 > height || y - rad/2 < 0) {
+      if(!inBlock){
       dy *= -1 * inelastic;
+      }
       if (y + rad/2 > height) {
         y = height - rad/2;
       } else {

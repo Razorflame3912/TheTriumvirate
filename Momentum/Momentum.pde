@@ -41,6 +41,6 @@ void draw() {
   }
   //Ball last = block.subs[block.subs.length - 1];
 
-  L.loadBlocks();
+ L.loadBlocks();
   //translate(last.x - xcor,last.y - ycor);
 }
