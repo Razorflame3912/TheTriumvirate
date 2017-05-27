@@ -5,7 +5,8 @@ float maxPull = 50;
 int gameScreen;
 int points;
 
-PImage bg, bg2;
+
+PImage bg, bg2, bg3;
 PImage slingshot;
 
 void setup() {
@@ -13,10 +14,13 @@ void setup() {
   bg = loadImage("img/titlescreen.png");
   bg2 = loadImage("img/background.png");
   bg2.resize(800, 400);
+  bg3 = loadImage("img/gameoverscreen.png");
+  bg3.resize(800, 400);
   slingshot= loadImage("img/slingshot.png");
   slingshot.resize(100, 100);
+  gameScreen = 0;
   points = 0;
-  b = new BlueBirb();
+  b = new RedBirb();
 }
 
 void mouseDragged() {
@@ -36,34 +40,48 @@ void mousePressed() {
     && gameScreen == 0) {
     gameScreen = 1;
   }
-}
-
-void draw() {
-
-  if (gameScreen == 0) {
-    titleScreen();
-  }
-
-  if (gameScreen == 1) {
-    gameScreen();
-    b.move();
-  }
-
-  if (gameScreen == 2) {
+  if (mouseX > 355 && mouseX < 450 && mouseY > 260 && mouseY < 317 && gameScreen == 2) {
+    gameScreen = 1;
   }
 }
 
 
 
-void titleScreen() {
-  background(bg);
-}
+  void draw() {
 
-void gameScreen() {
-  text(points, 20, 20);
-  background(bg2);
-  image(slingshot, 50, 275);
-}
+    if (gameScreen == 0) {
+      titleScreen();
+    }
 
-void gameOverScreen() {
-}
+    if (gameScreen == 1) {
+      gameScreen();
+      b.move();
+    }
+
+    if (gameScreen == 2) {
+      gameOverScreen();
+    }
+  }
+
+
+
+  void titleScreen() {
+    background(bg);
+  }
+
+  void gameScreen() {
+
+    text(points, 20, 20);
+    background(bg2);
+    image(slingshot, 50, 275);
+    textSize(20);
+    text(points, 20, 30);
+    fill(0);
+  }
+
+  void gameOverScreen() {
+    background(bg3);
+    textSize(20);
+    text(points, 542, 175);
+    fill(0);
+  }
