@@ -150,9 +150,9 @@ class Block {
       currenty = subs[x].y;
       if (subs[x].collision()) {
         influenceOthers(x, centerdx, centerdy);
-      } /*else if (subs[x].bounce()) {
+      } else if (subs[x].bounce()) {
         influenceOthersB(x, centerdx, centerdy, currentx, currenty);
-      }*/ else {
+      } else {
         subs[x].x += subs[x].dx;
         subs[x].y += subs[x].dy + grav;
       }

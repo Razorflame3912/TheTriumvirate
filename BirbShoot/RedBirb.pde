@@ -3,8 +3,7 @@ class RedBirb extends Birb {
   RedBirb() {
     super();
     whichBirb = 0;
-    loadedBirb = loadImage("img/red_birb.png");
-    loadedBirb.resize(50, 50);
+    loadedBirb = red;
   }
 
   void move() {
