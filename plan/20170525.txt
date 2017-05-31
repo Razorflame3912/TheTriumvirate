@@ -1,0 +1,7 @@
+PLAN FOR MAY 25TH 2017
+
+Mansour - Revert to earlier commit to bugfix
+
+Andrew - Implement class Level and a temporary Level tester
+
+Jason - Initialize point system, Game-Over screen

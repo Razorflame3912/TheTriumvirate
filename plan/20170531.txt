@@ -1,0 +1,20 @@
+PLAN FOR MAY 31ST 2017
+
+In order of greatest importance:
+
+0. Blocks collide with projectiles, the floor, and one another in a realistic manner
+
+1. Represent Blocks with rectangles to hide underlying circles (already achieved, but further testing required following changes made in task 0)
+
+2. Successfully load a Level that contains several Blocks that stack in a stable orientation
+
+ex:
+
+	[][][][][]
+	[]	[]
+	[]	[]
+	[]	[]
+	[]	[]
+	
+	
+	
