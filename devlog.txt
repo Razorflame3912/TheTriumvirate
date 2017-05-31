@@ -59,6 +59,19 @@
 +Mansour, Andrew, Jason - discussed how to implement collision of bird/block/pigs.
 +Andrew - various bugfixes to Birb.special() and BlueBirb graphics
 +Jason - removed loadImage() in some places to make game less laggy, pullback looks cleaner
++==============================================================
++2017-05-27
++Mansour - Optimized image loading such that BlueBirb split came with less lag
++Andrew - Attempts to get Blocks to collide with each other, floor
++==============================================================
++2017-05-29
++Mansour - Back to square one, undos Andrew's commits
++Andrew - Upset that his code failed miserably and had to be undone
++Jason - README added, but accidentally undone along with Andrew's code
++==============================================================
++2017-05-30
++Mansour, Andrew - Attempts to get Blocks to collide with each other, floor
++Jason - README again
 
 
 
