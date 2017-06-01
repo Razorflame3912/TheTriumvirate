@@ -72,6 +72,12 @@
 +2017-05-30
 +Mansour, Andrew - Attempts to get Blocks to collide with each other, floor
 +Jason - README again
++==============================================================
++2017-05-31
++Jason - initial implementation of queue of birbs, started on heaps of points for match history
++==============================================================
++2017-06-01
++
 
 
 
