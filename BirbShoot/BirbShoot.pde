@@ -1,17 +1,15 @@
 import java.util.LinkedList;
 import java.util.Queue;
 
-Birb redBirb;
-Birb yellowBirb;
-Birb blueBirb;
 Birb b;
+Birb redBirb;
+Birb blueBirb;
+Birb yellowBirb;
 
 float grav = .2;
 float maxPull = 50;
 int gameScreen;
 int points;
-int[] pointsHistory;
-int hp;
 int whichLevel = 1;
 Queue<Birb> birbQueue = new LinkedList();
 
@@ -33,16 +31,15 @@ void setup() {
   red.resize(50, 50);
   yellow = loadImage("img/yellow_birb.png");
   yellow.resize(50, 50);
-  gameScreen = 0;
-  points = 0;
-  hp = 100;
   redBirb = new RedBirb();
   yellowBirb = new YellowBirb();
   blueBirb = new BlueBirb();
+  birbQueue.add(redBirb);
   birbQueue.add(blueBirb);
   birbQueue.add(yellowBirb);
-  birbQueue.add(redBirb);
-  b = birbQueue.peek(); 
+  b = birbQueue.peek();
+  gameScreen = 0;
+  points = 0;
 }
 
 void mouseDragged() {
@@ -63,14 +60,19 @@ void mousePressed() {
     gameScreen = 1;
   }
   if (mouseX > 355 && mouseX < 450 && mouseY > 260 && mouseY < 317 && gameScreen == 2) {
-    gameScreen = 0;
+    gameScreen = 1;
   }
 }
 
 void updateBirb() {
-  if (b.x < 0 || b.y < 0 || b.x > 775 || b.y > 375 || hp <= 0 ) {
-    birbQueue.remove();
-    b = birbQueue.peek();
+  if (!(birbQueue.isEmpty())) {
+    if (b.x < 0 || b.y < 0 || b.x > 800 || b.y > 400 || b.hp <= 0) {
+      birbQueue.remove();
+      b = birbQueue.peek();
+    }
+  }
+  else {
+    b = null;
   }
 }
 
@@ -82,19 +84,18 @@ void draw() {
 
   if (gameScreen == 1) {
     gameScreen();
-    if (b != null) {
+    if ( b != null ) {
       b.move();
-      updateBirb();
     }
     else {
-      gameScreen = 2; 
+      gameScreen = 2;
     }
+    updateBirb();
   }
-  
+
   if (gameScreen == 2) {
     gameOverScreen();
   }
-  
 }
 
 void titleScreen() {
@@ -109,7 +110,6 @@ void gameScreen() {
   textSize(20);
   text(points, 20, 30);
   fill(0);
-  
 }
 
 void gameOverScreen() {
@@ -117,9 +117,4 @@ void gameOverScreen() {
   textSize(20);
   text(points, 542, 175);
   fill(0);
-}
-
-int increasePoints(int incr) {
-  points += incr;
-  return points;
 }
