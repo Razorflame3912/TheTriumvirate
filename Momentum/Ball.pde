@@ -55,35 +55,44 @@ class Ball {
       if (b.inFloor || (b != this && (myBlock == null || b.myBlock != myBlock) && !b.collided && !collided)) {
         if (b.myBlock != null && !b.myBlock.checkCollide()) {
           if (dist(x, y, b.x, b.y) < (rad/2 + b.rad/2)) {
-            //if(!b.inFloor){
-            dxtemp = dx;
-            dytemp = dy;
-            //}
-            dx = (((mass-b.mass)/(mass+b.mass)) * dx ) + (((2*b.mass)/(mass+b.mass)) * b.dx) * inelastic;
-            dy = (((mass-b.mass)/(mass+b.mass)) * dy ) + (((2*b.mass)/(mass+b.mass)) * b.dy) * inelastic;
-            if (!b.inFloor) {
-              b.dx = (((b.mass-mass)/(mass+b.mass)) * b.dx ) + (((2*mass)/(mass+b.mass)) * dxtemp) * inelastic;
-              b.dy = (((b.mass-mass)/(mass+b.mass)) * b.dy ) + (((2*mass)/(mass+b.mass)) * dytemp) * inelastic;
+            if (inBlock && myBlock != b.myBlock && b.myBlock.subs[0].y - b.myBlock.subs[b.myBlock.subs.length - 1].y == 0) {
+              myBlock.fallingOver = true;
+              myBlock.fallOver();
+              stickMe(b,this);
+              for(Ball ball: myBlock.subs){
+               ball.y -= 5; 
+              }
+            } else {
+              //if(!b.inFloor){
+              dxtemp = dx;
+              dytemp = dy;
+              //}
+              dx = (((mass-b.mass)/(mass+b.mass)) * dx ) + (((2*b.mass)/(mass+b.mass)) * b.dx) * inelastic;
+              dy = (((mass-b.mass)/(mass+b.mass)) * dy ) + (((2*b.mass)/(mass+b.mass)) * b.dy) * inelastic;
+              if (!b.inFloor) {
+                b.dx = (((b.mass-mass)/(mass+b.mass)) * b.dx ) + (((2*mass)/(mass+b.mass)) * dxtemp) * inelastic;
+                b.dy = (((b.mass-mass)/(mass+b.mass)) * b.dy ) + (((2*mass)/(mass+b.mass)) * dytemp) * inelastic;
+              }
+
+              if (!b.inBlock) {
+                b.dx = (((b.mass-mass)/(mass+b.mass)) * b.dx ) + (((2*mass)/(mass+b.mass)) * dxtemp) * inelastic;
+                b.dy = (((b.mass-mass)/(mass+b.mass)) * b.dy ) + (((2*mass)/(mass+b.mass)) * dytemp) * inelastic;
+              }
+              if (!inFloor && !inBlock && (b.inBlock || b.inFloor)) {
+                stickMe(b, this);
+              }
+
+              if (inBlock && (b.inFloor || b.inBlock)) {
+                stickMe(b, this);
+              }
+
+
+
+
+              b.collided = true;
+              collided = true;
+              return true;
             }
-
-            if (!b.inBlock) {
-              b.dx = (((b.mass-mass)/(mass+b.mass)) * b.dx ) + (((2*mass)/(mass+b.mass)) * dxtemp) * inelastic;
-              b.dy = (((b.mass-mass)/(mass+b.mass)) * b.dy ) + (((2*mass)/(mass+b.mass)) * dytemp) * inelastic;
-            }
-            if (!inFloor && !inBlock && (b.inBlock || b.inFloor)) {
-              stickMe(b, this);
-            }
-
-            if (inBlock && (b.inFloor || b.inBlock)) {
-              stickMe(b, this);
-            }
-
-
-
-
-            b.collided = true;
-            collided = true;
-            return true;
           }
         }
       }

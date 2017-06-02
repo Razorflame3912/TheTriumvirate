@@ -16,7 +16,7 @@ void setup() {
   balls.add(new Ball());
   balls.get(0).x = 100;
   balls.get(0).y = 1 + ((0%2+1));
-  balls.get(0).dx = 2;
+  balls.get(0).dx = 0;
   balls.get(0).dy = 2 + ((0%2) * -6);
   balls.get(0).mass = 1;
   //}
