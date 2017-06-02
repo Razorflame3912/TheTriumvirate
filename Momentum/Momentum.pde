@@ -7,10 +7,10 @@ float grav = 0;
 float inelastic = 0.5;
 Level L;
 void setup() {
-  size(700, 700);
+  size(1400, 700);
   background(0);
   stroke(0);
-  frameRate(120);
+  frameRate(360);
   balls = new ArrayList<Ball>();
   //for (int x=0; x < balls.size(); x++) {
   balls.add(new Ball());
@@ -65,10 +65,27 @@ void draw() {
   //float ycor = last.y;
 
   for (Block bl : blocks) {
+    if (bl.reachedFloor()){ //hit the floor
+      if(!bl.atRest()) //hit the floor but not horizontal yet
+        bl.fallingOver = true; //keep falling over 
+      else{ //flat on the floor
+        bl.friction();
+        for(Ball b : bl.subs) //yo balls
+          b.dy = 0; //stop passing through the floor oh my god
+      }
+      bl.fallOver(); //fall over a lil bit
+    }
+    
     bl.update();
   }
 
   for (Block bl : blocks) {
+    /*
+    if (bl.reachedFloor()){
+      bl.fallingOver = true;
+      bl.fallOver();
+    }
+    */
     if (!bl.checkCollide()) {
       bl.progress();
     }

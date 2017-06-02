@@ -1,6 +1,6 @@
 class Block {
   Ball[] subs;
-
+  boolean fallingOver;
   Block() {
     subs = new Ball[1];
     subs[1] = new Ball();
@@ -25,6 +25,7 @@ class Block {
       b.myBlock = this;
       balls.add(b);
     }
+    fallingOver = false;
   }
 
   /*boolean collision() {
@@ -102,35 +103,35 @@ class Block {
     }
   }
 
-/*  void influenceOthersB(int index, float centerdxb, float centerdyb, float currentxb, float currentyb) {
-    float changex, changey;
-    float xdiff = 0;
-    float ydiff = 0;
-    changex = changey = 0;
-    if (subs[index].x == subs[index].rad/2 || subs[index].x == width - subs[index].rad/2) {
-      changex = centerdxb * -1;
-      xdiff = subs[index].x - currentxb;
-    } else {
-      changey = centerdyb * -1;
-      ydiff = subs[index].y - currentyb;
-    }
-    for (int i = 0; i < subs.length; i++) {
-      subs[i].dx += changex;
-      subs[i].dy += changey;
-      if (i != index) {
-        if (changex < 0) {
-          subs[i].x += xdiff;
-        } else {
-          subs[i].x -= xdiff;
-        }
-        if (changey < 0) {
-          subs[i].y += ydiff;
-        } else {
-          subs[i].y-=ydiff;
-        }
-      }
-    }
-  }*/
+  /*  void influenceOthersB(int index, float centerdxb, float centerdyb, float currentxb, float currentyb) {
+   float changex, changey;
+   float xdiff = 0;
+   float ydiff = 0;
+   changex = changey = 0;
+   if (subs[index].x == subs[index].rad/2 || subs[index].x == width - subs[index].rad/2) {
+   changex = centerdxb * -1;
+   xdiff = subs[index].x - currentxb;
+   } else {
+   changey = centerdyb * -1;
+   ydiff = subs[index].y - currentyb;
+   }
+   for (int i = 0; i < subs.length; i++) {
+   subs[i].dx += changex;
+   subs[i].dy += changey;
+   if (i != index) {
+   if (changex < 0) {
+   subs[i].x += xdiff;
+   } else {
+   subs[i].x -= xdiff;
+   }
+   if (changey < 0) {
+   subs[i].y += ydiff;
+   } else {
+   subs[i].y-=ydiff;
+   }
+   }
+   }
+   }*/
 
   void stickMe(Ball me, Ball you) {
     float distance = dist(me.x, me.y, you.x, you.y);
@@ -153,11 +154,10 @@ class Block {
       currenty = subs[x].y;
       //subs[x].collision();
       if (subs[x].collided) {
-        if(x == center){
-        influenceOthers(x-1, centerdx, centerdy);
-        }
-        else{
-        influenceOthers(x, centerdx, centerdy);
+        if (x == center) {
+          influenceOthers(x-1, centerdx, centerdy);
+        } else {
+          influenceOthers(x, centerdx, centerdy);
         }
       } //else if (subs[x].bounce()) {
       //influenceOthersB(x, centerdx, centerdy, currentx, currenty);
@@ -183,15 +183,71 @@ class Block {
       b.dy += grav;
       b.x += b.dx;
       b.y += b.dy;
-      
     }
   }
-  
-  boolean checkCollide(){
-   boolean ret = false;
-   for(Ball b : subs){
-    ret  = ret && b.collided; 
-   }
-   return ret;
+
+  boolean checkCollide() {
+    boolean ret = false;
+    for (Ball b : subs) {
+      ret  = ret && b.collided;
+    }
+    return ret;
   }
+  
+  boolean reachedFloor() //as in the bottom of the screen, not the highly experimental "ball-wall"
+  {
+    return subs[0].y + subs[0].rad >= height || subs[subs.length - 1].y + subs[0].rad >= height;
+  }
+  boolean atRest()
+  {
+    return reachedFloor() && subs[0].y == subs[subs.length - 1].y;
+  }
+  void friction()
+  {
+    if (atRest())
+      for(Ball b:subs)
+        b.dx *= 0.2;
+  }
+    
+  void fallOver()
+  {
+    
+    if (fallingOver)
+    {
+      if(subs[0].x == subs[subs.length - 1].x) //block is vertical
+        return;
+      float theta = abs(atan( (subs[subs.length - 1].y - subs[0].y)/(subs[subs.length - 1].x - subs[0].x) ));
+      theta -= radians(.1);//fall over 0.1 degrees at a time
+      float len;
+      //leftmost ball contacted with ground
+      if (subs[0].y > subs[subs.length - 1].y)
+      {
+        //subs[0].y = height - subs[0].rad;
+        subs[0].dy = 0;
+        for (int i = subs.length - 1; i > 0; i --)
+        {
+          len = i * subs[0].rad;
+          subs[i].x = subs[0].x + len * cos(theta);
+          subs[i].y = subs[0].y - len * sin(theta);
+        }
+      }
+      //right most ball contacted with ground
+      else if (subs[subs.length - 1].y > subs[0].y)
+      {
+        subs[subs.length - 1].dy = 0;
+        for (int i = 0; i < subs.length - 1; i ++)
+        {
+          len = (subs.length - 1 - i) * subs[0].rad;
+          subs[i].x = subs[subs.length - 1].x - len * cos(theta);
+          subs[i].y = subs[subs.length - 1].y - len * sin(theta);
+        }
+      }
+      else {
+        fallingOver = false;
+      }
+    } 
+    else {
+      return;
+    }
+  }//end fallOver
 }
