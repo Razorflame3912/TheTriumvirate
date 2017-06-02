@@ -222,8 +222,11 @@ class Block {
 
     if (fallingOver)
     {
-      if (subs[0].x == subs[subs.length - 1].x) //block is vertical
+      if (subs[0].x == subs[subs.length - 1].x){ //block is vertical
+        fallingOver = false;
+        flatOnTheFloor = true;
         return;
+      }
 
       float theta = abs(atan( (subs[subs.length - 1].y - subs[0].y)/(subs[subs.length - 1].x - subs[0].x) ));
       theta -= radians(.1);//fall over 0.1 degrees at a time
