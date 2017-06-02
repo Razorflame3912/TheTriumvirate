@@ -55,6 +55,7 @@ class Ball {
       if (b.inFloor || (b != this && (myBlock == null || b.myBlock != myBlock) && !b.collided && !collided)) {
         if (b.myBlock != null && !b.myBlock.checkCollide()) {
           if (dist(x, y, b.x, b.y) < (rad/2 + b.rad/2)) {
+            //if hitting a Block that is horizontal, fall over as if you hit the floor
             if (inBlock && myBlock != b.myBlock && b.myBlock.subs[0].y - b.myBlock.subs[b.myBlock.subs.length - 1].y == 0) {
               myBlock.fallingOver = true;
               myBlock.fallOver();
@@ -62,7 +63,21 @@ class Ball {
               for(Ball ball: myBlock.subs){
                ball.y -= 5; 
               }
-            } else {
+            }
+            else if(b.myBlock.flatOnTheFloor && b.myBlock.subs[0].x == b.myBlock.subs[b.myBlock.subs.length - 1].x){
+              if (this.dx > 0){
+                //offset b.myBlock a bit to the right
+                //b.myBlock falls over as usual
+              }
+              else if (this.dx < 0){
+                //offset b.myBlock a bit to the left
+                //b.myBlock falls over as usual
+              }
+              else{ //this.dx == 0
+                //remove b.myBlock from the game (vertical hits are its weakness)
+              }
+            }
+            else {
               //if(!b.inFloor){
               dxtemp = dx;
               dytemp = dy;
