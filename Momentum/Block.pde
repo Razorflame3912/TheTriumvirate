@@ -21,6 +21,9 @@ class Block {
       b.dx = 0;
       b.dy = 0;
       b.inBlock = true;
+      b.inFloor = false;
+      b.myBlock = this;
+      balls.add(b);
     }
   }
 
@@ -99,7 +102,7 @@ class Block {
     }
   }
 
-  void influenceOthersB(int index, float centerdxb, float centerdyb, float currentxb, float currentyb) {
+/*  void influenceOthersB(int index, float centerdxb, float centerdyb, float currentxb, float currentyb) {
     float changex, changey;
     float xdiff = 0;
     float ydiff = 0;
@@ -127,7 +130,7 @@ class Block {
         }
       }
     }
-  }
+  }*/
 
   void stickMe(Ball me, Ball you) {
     float distance = dist(me.x, me.y, you.x, you.y);
@@ -148,15 +151,21 @@ class Block {
     for (int x = 0; x<subs.length; x++) {
       currentx = subs[x].x;
       currenty = subs[x].y;
-      if (subs[x].collision()) {
+      //subs[x].collision();
+      if (subs[x].collided) {
+        if(x == center){
+        influenceOthers(x-1, centerdx, centerdy);
+        }
+        else{
         influenceOthers(x, centerdx, centerdy);
-      } else if (subs[x].bounce()) {
-        influenceOthersB(x, centerdx, centerdy, currentx, currenty);
-      } else {
-        subs[x].x += subs[x].dx;
-        subs[x].y += subs[x].dy + grav;
-      }
+        }
+      } //else if (subs[x].bounce()) {
+      //influenceOthersB(x, centerdx, centerdy, currentx, currenty);
     }
+    // }
+  }
+
+  void stickEmAll() {
     int i = 0;
     while (subs.length/2 + i + 1 < subs.length) {
       stickMe(subs[subs.length/2 + i], subs[subs.length/2 + i + 1]);
@@ -167,6 +176,22 @@ class Block {
       stickMe(subs[(subs.length/2) - j], subs[(subs.length/2) - j - 1]);
       j++;
     }
-    // }
+  }
+
+  void progress() {
+    for (Ball b : subs) {
+      b.dy += grav;
+      b.x += b.dx;
+      b.y += b.dy;
+      
+    }
+  }
+  
+  boolean checkCollide(){
+   boolean ret = false;
+   for(Ball b : subs){
+    ret  = ret && b.collided; 
+   }
+   return ret;
   }
 }
