@@ -36,9 +36,9 @@ void setup() {
     balls.add(b);
   }
   blocks = new ArrayList<Block>();  
-  blocks.add(new Block(50, 300, 100, 100));
-  blocks.add(new Block(50, 300, 100, 200) );
-  blocks.add(new Block(50, 300, 100, 300) );
+  blocks.add(new Block(50, 300, 100, 100,1));
+  blocks.add(new Block(50, 300, 100, 200,1) );
+  blocks.add(new Block(50, 300, 100, 600,-1) );
 
   L = new Level();
   L.addBlocks(blocks);

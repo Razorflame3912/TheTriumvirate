@@ -7,18 +7,23 @@ class Block {
     subs[1] = new Ball();
   }
 
-  Block(int w, int l, int xcor, int ycor) {
+  Block(int w, int l, int xcor, int ycor, int direction) {
     int rad = w;
     int xnow = xcor;
+    int ynow = ycor;
     subs = new Ball[l/rad];
     for (int x = 0; x < subs.length; x++) {
       subs[x] = new Ball();
       Ball b =  subs[x];
       b.mass = 10;
       b.rad = rad;
-      b.y = ycor;
+      b.y = ynow;
       b.x = xnow;
-      xnow += rad;
+      if (direction > 0) {
+        xnow += rad;
+      } else {
+        ynow -= rad;
+      }
       b.dx = 0;
       b.dy = 0;
       b.inBlock = true;
@@ -182,7 +187,7 @@ class Block {
 
   void progress() {
     for (Ball b : subs) {
-      if(!flatOnTheFloor)
+      if (!flatOnTheFloor)
         b.dy += grav;
       b.x += b.dx;
       b.y += b.dy;
@@ -196,7 +201,7 @@ class Block {
     }
     return ret;
   }
-  
+
   boolean reachedFloor() //as in the bottom of the screen, not the highly experimental "ball-wall"
   {
     return subs[0].y + subs[0].rad >= height || subs[subs.length - 1].y + subs[0].rad >= height;
@@ -205,25 +210,25 @@ class Block {
   void friction()
   {
     //if (flatOnTheFloor)
-      for(Ball b:subs){
-        b.dx *= 0.99;
-        if (b.dx < 0.01)
-          b.dx = 0;
-      }
+    for (Ball b : subs) {
+      b.dx *= 0.99;
+      if (b.dx < 0.01)
+        b.dx = 0;
+    }
   }
-    
+
   void fallOver()
   {
-    
+
     if (fallingOver)
     {
-      if(subs[0].x == subs[subs.length - 1].x) //block is vertical
+      if (subs[0].x == subs[subs.length - 1].x) //block is vertical
         return;
-        
+
       float theta = abs(atan( (subs[subs.length - 1].y - subs[0].y)/(subs[subs.length - 1].x - subs[0].x) ));
       theta -= radians(.1);//fall over 0.1 degrees at a time
       float len;
-      
+
       //leftmost ball contacted with ground
       if (subs[0].y > subs[subs.length - 1].y && theta > 0)
       {
@@ -246,13 +251,11 @@ class Block {
           subs[i].x = subs[subs.length - 1].x - len * cos(theta);
           subs[i].y = subs[subs.length - 1].y - len * sin(theta);
         }
-      }
-      else {
+      } else {
         fallingOver = false;
         flatOnTheFloor = true;
       }
-    } 
-    else {
+    } else {
       return;
     }
   }//end fallOver
