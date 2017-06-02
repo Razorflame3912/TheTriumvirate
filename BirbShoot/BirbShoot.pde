@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 Birb redBirb;
 Birb yellowBirb;
@@ -10,12 +11,12 @@ float grav = .2;
 float maxPull = 50;
 int gameScreen;
 int points;
-int[] pointsHistory;
+Stack<Integer> pointsHistory = new Stack();
 int hp;
 int whichLevel = 1;
 Queue<Birb> birbQueue = new LinkedList();
 
-PImage bg, bg2, bg3, red, blue, yellow;
+PImage bg, bg2, bg3, bg4, red, blue, yellow;
 PImage slingshot;
 
 void setup() {
@@ -25,6 +26,8 @@ void setup() {
   bg2.resize(800, 400);
   bg3 = loadImage("img/gameoverscreen.png");
   bg3.resize(800, 400);
+  bg4 = loadImage("img/matchhistoryscreen.png");
+  bg4.resize(800,400);
   slingshot= loadImage("img/slingshot.png");
   slingshot.resize(100, 100);
   blue = loadImage("img/blue_birb.png");
@@ -65,6 +68,9 @@ void mousePressed() {
   if (mouseX > 355 && mouseX < 450 && mouseY > 260 && mouseY < 317 && gameScreen == 2) {
     gameScreen = 0;
   }
+  if (mouseX > 800 && mouseX < 0 && mouseY > 400 && mouseY < 0 && gameScreen == 2) {
+    gameScreen = 3;
+  }
 }
 
 void updateBirb() {
@@ -87,12 +93,18 @@ void draw() {
       updateBirb();
     }
     else {
-      gameScreen = 2; 
+      gameScreen = 2;
+      b = new RedBirb();
+      pointsHistory.push(points);
     }
   }
   
   if (gameScreen == 2) {
     gameOverScreen();
+  }
+  
+  if (gameScreen == 3) {
+    matchHistoryScreen();
   }
   
 }
@@ -116,6 +128,17 @@ void gameOverScreen() {
   background(bg3);
   textSize(20);
   text(points, 542, 175);
+  fill(0);
+}
+
+void matchHistoryScreen() {
+  int ctr = 100;
+  background(bg4);
+  textSize(20);
+  while(!(pointsHistory.empty())) {
+    text(pointsHistory.pop(), 100, ctr);
+    ctr += 100;
+  }
   fill(0);
 }
 

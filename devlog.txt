@@ -78,6 +78,7 @@
 +==============================================================
 +2017-06-01
 +Andrew - implemented better method for Blocks that hit the floor, but a Block that collides with one that's on the floor will make em go whoosh
++Jason - initial implementation of stack of points/heapsort for highest scores
 
 
 
