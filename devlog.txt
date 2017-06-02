@@ -77,7 +77,7 @@
 +Jason - initial implementation of queue of birbs, started on heaps of points for match history
 +==============================================================
 +2017-06-01
-+
++Andrew - implemented better method for Blocks that hit the floor, but a Block that collides with one that's on the floor will make em go whoosh
 
 
 
