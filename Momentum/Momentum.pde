@@ -3,7 +3,7 @@ ArrayList<Ball> balls;
 Ball[] floor;
 ArrayList<Block> blocks;
 
-float grav = 0;
+float grav = 0.001;
 float inelastic = 0.5;
 Level L;
 void setup() {
@@ -65,13 +65,18 @@ void draw() {
   //float ycor = last.y;
 
   for (Block bl : blocks) {
+    //print(bl.fallingOver); //for bug fixing
     if (bl.reachedFloor()){ //hit the floor
-      if(!bl.atRest()) //hit the floor but not horizontal yet
+      //print(bl.fallingOver);
+      if(!bl.flatOnTheFloor){ //hit the floor but not horizontal yet
         bl.fallingOver = true; //keep falling over 
+        bl.fallOver(); //fall over a lil bit        
+      }
       else{ //flat on the floor
         bl.friction();
-        for(Ball b : bl.subs) //yo balls
+        for(Ball b : bl.subs){
           b.dy = 0; //stop passing through the floor oh my god
+        }
       }
       bl.fallOver(); //fall over a lil bit
     }

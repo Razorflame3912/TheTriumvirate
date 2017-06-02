@@ -1,6 +1,7 @@
 class Block {
   Ball[] subs;
   boolean fallingOver;
+  boolean flatOnTheFloor;
   Block() {
     subs = new Ball[1];
     subs[1] = new Ball();
@@ -26,6 +27,7 @@ class Block {
       balls.add(b);
     }
     fallingOver = false;
+    flatOnTheFloor = false;
   }
 
   /*boolean collision() {
@@ -180,7 +182,8 @@ class Block {
 
   void progress() {
     for (Ball b : subs) {
-      b.dy += grav;
+      if(!flatOnTheFloor)
+        b.dy += grav;
       b.x += b.dx;
       b.y += b.dy;
     }
@@ -198,15 +201,15 @@ class Block {
   {
     return subs[0].y + subs[0].rad >= height || subs[subs.length - 1].y + subs[0].rad >= height;
   }
-  boolean atRest()
-  {
-    return reachedFloor() && subs[0].y == subs[subs.length - 1].y;
-  }
+
   void friction()
   {
-    if (atRest())
-      for(Ball b:subs)
-        b.dx *= 0.2;
+    //if (flatOnTheFloor)
+      for(Ball b:subs){
+        b.dx *= 0.99;
+        if (b.dx < 0.01)
+          b.dx = 0;
+      }
   }
     
   void fallOver()
@@ -216,11 +219,13 @@ class Block {
     {
       if(subs[0].x == subs[subs.length - 1].x) //block is vertical
         return;
+        
       float theta = abs(atan( (subs[subs.length - 1].y - subs[0].y)/(subs[subs.length - 1].x - subs[0].x) ));
       theta -= radians(.1);//fall over 0.1 degrees at a time
       float len;
+      
       //leftmost ball contacted with ground
-      if (subs[0].y > subs[subs.length - 1].y)
+      if (subs[0].y > subs[subs.length - 1].y && theta > 0)
       {
         //subs[0].y = height - subs[0].rad;
         subs[0].dy = 0;
@@ -232,7 +237,7 @@ class Block {
         }
       }
       //right most ball contacted with ground
-      else if (subs[subs.length - 1].y > subs[0].y)
+      else if (subs[subs.length - 1].y > subs[0].y && theta > 0)
       {
         subs[subs.length - 1].dy = 0;
         for (int i = 0; i < subs.length - 1; i ++)
@@ -244,6 +249,7 @@ class Block {
       }
       else {
         fallingOver = false;
+        flatOnTheFloor = true;
       }
     } 
     else {
