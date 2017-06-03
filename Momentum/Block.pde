@@ -206,7 +206,10 @@ class Block {
   {
     return subs[0].y + subs[0].rad >= height || subs[subs.length - 1].y + subs[0].rad >= height;
   }
-
+  boolean isVertical()
+  {
+    return subs[0].x == subs[subs.length-1].x;
+  }
   void friction()
   {
     //if (flatOnTheFloor)
@@ -222,12 +225,13 @@ class Block {
 
     if (fallingOver)
     {
+      
       if (subs[0].x == subs[subs.length - 1].x){ //block is vertical
         fallingOver = false;
         flatOnTheFloor = true;
         return;
       }
-
+      
       float theta = abs(atan( (subs[subs.length - 1].y - subs[0].y)/(subs[subs.length - 1].x - subs[0].x) ));
       theta -= radians(.1);//fall over 0.1 degrees at a time
       float len;
@@ -262,4 +266,50 @@ class Block {
       return;
     }
   }//end fallOver
+  
+  void vertFallOver(float dir)
+  {
+    int angle = 80; //variable gives me easy way to change all the values in the following lines
+    float len;
+    if(subs[0].y > subs[subs.length - 1].y)
+    {      
+      for(int i = 1;i < subs.length;i ++){
+        len = i * subs[0].rad;
+        if(dir > 0){
+          subs[i].x = subs[0].x + len * cos(radians(angle));  
+          subs[i].y = subs[0].y - len * sin(radians(angle));
+        }
+        else if(dir < 0){
+          subs[i].x = subs[0].x - len * cos(radians(angle));
+          subs[i].y = subs[0].y - len * sin(radians(angle));
+        }
+        else{ //dir == 0, block was struck by an object moving straight down
+          //for(Ball b : subs)
+            //b.dy = 0;
+          return;
+        }
+      }
+    }
+    // in the case that the block flipped end over end, and subs[0] is on top
+    else
+    {
+      for(int i = subs.length - 2;i >= 0;i --){
+        len = (subs.length - 1 - i) * subs[0].rad;
+        if(dir > 0){
+          subs[i].x = subs[0].x + len * cos(radians(angle));
+          subs[i].y = subs[0].y - len * sin(radians(angle));
+        }
+        else if(dir < 0){
+          subs[i].x = subs[0].x - len * cos(radians(angle));
+          subs[i].y = subs[0].y - len * sin(radians(angle));
+        }  
+        else{
+          return;
+        }
+      }    
+    }
+    fallingOver = true;
+    flatOnTheFloor = false;
+  }
+          
 }

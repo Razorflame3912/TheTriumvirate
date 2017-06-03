@@ -59,15 +59,52 @@ class Ball {
             if (inBlock && myBlock != b.myBlock && b.myBlock.subs[0].y - b.myBlock.subs[b.myBlock.subs.length - 1].y == 0) {
               myBlock.fallingOver = true;
               myBlock.fallOver();
-              stickMe(b,this);
+              //stickMe(b,this);
               for(Ball ball: myBlock.subs){
                ball.y -= 5; 
               }
             }
-            else if(b.myBlock.flatOnTheFloor && b.myBlock.subs[0].x == b.myBlock.subs[b.myBlock.subs.length - 1].x){
+            
+            //colliding with a vertical block resting on the floor
+            //else if(b.myBlock.flatOnTheFloor && b.myBlock.subs[0].x == b.myBlock.subs[b.myBlock.subs.length - 1].x){
+            else if(b.myBlock.isVertical()){
+              Block vert = b.myBlock;
+              //vert.fallingOver = true;
+              //vert.flatOnTheFloor = false;
+              //vert.fallOver();
+              vert.vertFallOver(dx); //if ball is moving right, the block it contacts will fall over to the right
+              for(Ball ball : myBlock.subs){
+                ball.dy = 0;
+              }
+              myBlock.fallingOver = true;
+              myBlock.fallOver();
+                
+              /*
+              float len; //dist between a certain ball and a ball on the end
               if (this.dx > 0){
                 //offset b.myBlock a bit to the right
+                //if "first" ball of b.myBlock is on the floor
+                if(vert.subs[0].y > vert.subs[vert.subs.length - 1].y){
+                  vert.subs[0].dy = 0;
+                  for(int i = 1;i < vert.subs.length;i ++){
+                    len = i * vert.subs[0].rad; //Ball 1 is 1 rad away from Ball 0
+                    vert.subs[i].x = vert.subs[0].x + len * cos(radians(85));
+                    vert.subs[i].y = vert.subs[0].y - len * sin(radians(85));
+                  }
+                }
                 //b.myBlock falls over as usual
+                //"last" ball of b.myBlock is on the floor
+                else{ 
+                  for(int i = vert.subs.length - 2;i >= 0;i ++){
+                    len = (vert.subs.length - 1 - i) * vert.subs[0].rad; //for each index away, one rad farther away
+                    vert.subs[i].x = vert.subs[vert.subs.length - 1].x + len * cos(radians(85));
+                    vert.subs[i].y = vert.subs[vert.subs.length - 1].y - len * sin(radians(85));
+                  }
+                }
+                //b.myBlock falls over as usual                
+                vert.fallingOver = true;
+                vert.flatOnTheFloor = false;
+                
               }
               else if (this.dx < 0){
                 //offset b.myBlock a bit to the left
@@ -76,7 +113,14 @@ class Ball {
               else{ //this.dx == 0
                 //remove b.myBlock from the game (vertical hits are its weakness)
               }
+              */
             }
+            /*
+            else if(b.myBlock.fallingOver){
+              for(Ball ball : myBlock.subs)
+                ball.y -= 10;
+            }
+            */
             else {
               //if(!b.inFloor){
               dxtemp = dx;
