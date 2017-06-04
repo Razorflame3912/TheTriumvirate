@@ -51,23 +51,32 @@ class Ball {
     float dxtemp, dytemp;
     //boolean hit = false;
     dxtemp = dytemp = 0;
+    bounce();
     for (Ball b : balls) {
       if (b.inFloor || (b != this && (myBlock == null || b.myBlock != myBlock) && !b.collided && !collided)) {
         if (b.myBlock != null && !b.myBlock.checkCollide()) {
           if (dist(x, y, b.x, b.y) < (rad/2 + b.rad/2)) {
-            //if hitting a Block that is horizontal, fall over as if you hit the floor
+            //if hitting a Block that is horizontal, fall over as if you hit the floor, only if you're in a Block of course
             if (inBlock && myBlock != b.myBlock && b.myBlock.subs[0].y - b.myBlock.subs[b.myBlock.subs.length - 1].y == 0) {
+              //F = ma, decrement health based on velocity, which accelerates (or decelerates, for all you laymen) to zero
+              //in a single frame, which takes 1/frameRate seconds
+              myBlock.health -= (sqrt( sq(dx) + sq(dy) ) ) / (1/frameRate); 
+              b.myBlock.health -= (sqrt( sq(dx) + sq(dy) ) ) / (1/frameRate);
               myBlock.fallingOver = true;
-              myBlock.fallOver();
+              myBlock.fallOver();            
               //stickMe(b,this);
               for(Ball ball: myBlock.subs){
-               ball.y -= 5; 
+               ball.y -= 5; //to prevent overlapping or whatever's causing all of our bugs
               }
             }
             
             //colliding with a vertical block resting on the floor
             //else if(b.myBlock.flatOnTheFloor && b.myBlock.subs[0].x == b.myBlock.subs[b.myBlock.subs.length - 1].x){
             else if(b.myBlock.isVertical()){
+              //decrementing health is the first step since dx and dy will be manipulated in the following lines
+              if(inBlock)
+                myBlock.health -= (sqrt( sq(dx) + sq(dy) ) ) / (1/frameRate);
+              b.myBlock.health -= (sqrt( sq(dx) + sq(dy) ) ) / (1/frameRate);
               Block vert = b.myBlock;
               //vert.fallingOver = true;
               //vert.flatOnTheFloor = false;
@@ -128,6 +137,15 @@ class Ball {
               //}
               dx = (((mass-b.mass)/(mass+b.mass)) * dx ) + (((2*b.mass)/(mass+b.mass)) * b.dx) * inelastic;
               dy = (((mass-b.mass)/(mass+b.mass)) * dy ) + (((2*b.mass)/(mass+b.mass)) * b.dy) * inelastic;
+              //health decrementation (is that a word?)
+              //calculate change in velocity over time (acceleration)
+              //time is one frame, which is 1 second over the frameRate
+              if (inBlock){
+                myBlock.health -= abs(sqrt( sq(dx) + sq(dy) ) - sqrt( sq(dxtemp) + sq(dytemp) )) / (1 / frameRate);
+              }
+              if (b.inBlock){
+                b.myBlock.health -= abs(sqrt( sq(dx) + sq(dy) ) - sqrt( sq(dxtemp) + sq(dytemp) )) / (1 / frameRate);
+              }
               if (!b.inFloor) {
                 b.dx = (((b.mass-mass)/(mass+b.mass)) * b.dx ) + (((2*mass)/(mass+b.mass)) * dxtemp) * inelastic;
                 b.dy = (((b.mass-mass)/(mass+b.mass)) * b.dy ) + (((2*mass)/(mass+b.mass)) * dytemp) * inelastic;

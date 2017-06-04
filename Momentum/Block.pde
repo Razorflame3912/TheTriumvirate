@@ -2,6 +2,7 @@ class Block {
   Ball[] subs;
   boolean fallingOver;
   boolean flatOnTheFloor;
+  float health;
   Block() {
     subs = new Ball[1];
     subs[1] = new Ball();
@@ -33,6 +34,7 @@ class Block {
     }
     fallingOver = false;
     flatOnTheFloor = false;
+    health = 100;
   }
 
   /*boolean collision() {
@@ -261,12 +263,25 @@ class Block {
       } else {
         fallingOver = false;
         flatOnTheFloor = true;
+        fallOverDamage();
       }
     } else {
       return;
     }
   }//end fallOver
-  
+  void fallOverDamage()
+  {
+    float len = subs.length * subs[0].rad;
+    float circumferenceOfCircularPathOfTheOuterMostBall = 2 * len * PI; //circ of the circle that has bl as its radius
+    //outermost ball is traveling at 1 degree per 1/frameRate seconds
+    float velocity = (1/circumferenceOfCircularPathOfTheOuterMostBall) / (1/frameRate);
+    //accelerates to a stop in a single frame
+    float a = velocity / (1/frameRate);
+    //f=ma, no mass variable for now
+    health -= abs(a); //abs just in case;
+  }
+    
+    
   void vertFallOver(float dir)
   {
     int angle = 80; //variable gives me easy way to change all the values in the following lines
