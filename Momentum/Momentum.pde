@@ -2,6 +2,7 @@ ArrayList<Ball> balls;
 //Ball[] balls;
 Ball[] floor;
 ArrayList<Block> blocks;
+ArrayList<Pig> pigs;
 
 float grav = 0.001;
 float inelastic = 0.5;
@@ -39,7 +40,7 @@ void setup() {
     balls.add(b);
   }
   blocks = new ArrayList<Block>();  
-  blocks.add(new Block(50, 300, 100, 325, 1));
+  //blocks.add(new Block(50, 300, 100, 325, 1));
   //blocks.add(new Block(50, 300, 100, 200,1) );
   blocks.add(new Block(50, 300, 350, 650,-1) );
   blocks.add(new Block(50, 300, 100, 650,-1) );
@@ -49,6 +50,11 @@ void setup() {
   //breakBlock(blocks.get(0));
   L = new Level();
   L.addBlocks(blocks);
+  
+  pigs = new ArrayList<Pig>();
+  pigs.add(new Pig(100,200));
+  //test killPig()
+  //killPig(pigs.get(0));
 }
 
 //to remove a Block with zero health from the ArrayList of Blocks
@@ -74,9 +80,22 @@ void removeBalls(Block target) {
   }
 }
 
+//to remove a pig (preferably when it dies)
+void killPig(Pig target) {
+  int i = 0;
+  for (Pig p : pigs){
+    if (p == target){
+      pigs.remove(i);
+      return;
+    }
+    else
+      i += 1;
+  }
+}
+
 void draw() {
   background(0);
-
+  
   for (Ball b : balls) {
     b.collided = false;
   }
@@ -85,18 +104,28 @@ void draw() {
     if (!b.inFloor) {
       if (!b.collided || (b.myBlock != null && !b.myBlock.checkCollide())) {
         b.collision();
+        b.hitPig();
       }
     }
     //ellipse(b.x, b.y, b.rad, b.rad);
   }
-
+  
+  for (Pig p : pigs) {
+    print(p.health + " ");
+    //p.getHit();
+    if(p.bounce())
+      p.health -= sqrt( sq(p.dx) + sq(p.dy) ) * p.mass;
+    p.update();
+    ellipse(p.x,p.y,p.rad,p.rad);
+  }
+  
   //Ball last = block.subs[block.subs.length - 1];  
   //float xcor = last.x;
   //float ycor = last.y;
 
   for (Block bl : blocks) {
     //print(bl.fallingOver); //for bug fixing
-    print(bl.health + " ");
+    //print(bl.health + " ");
     //for(int i = 0;i < bl.subs.length - 1;i++)
     //bl.subs[i].stickMe(bl.subs[i],bl.subs[i+1]);
 
@@ -165,7 +194,13 @@ void draw() {
     else
       i += 1;
   }
-  //Ball last = block.subs[block.subs.length - 1];
+  i = 0;
+  while(i < pigs.size()){
+    if(pigs.get(i).health <= 0)
+      killPig(pigs.get(i));
+    else
+      i += 1;
+  }
 
   //L.loadBlocks();
   //translate(last.x - xcor,last.y - ycor);

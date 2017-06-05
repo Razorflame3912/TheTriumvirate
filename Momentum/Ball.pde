@@ -232,7 +232,33 @@ class Ball {
       }
     }
   }
-
+  void hitPig() {
+    for(Pig p : pigs) {
+    //int i = 0;
+    //while( i < pigs.size() ){
+      //Pig p = pigs.get(i);
+      if( dist( x , y , p.x , p.y) <= rad/2 + p.rad/2 ){
+        p.health -= ( sqrt( sq(dx) + sq(dy) ) + sqrt( sq(p.dx) + sq(p.dy) ) ) * (mass + p.mass);
+        //impact was enough to kill pig
+        if(p.health <= 0){
+          //killPig(p);
+          dx *= 0.5;
+          dy *= 0.5;
+        }
+        //impact was not strong enough
+        else{
+          //ball's direction is opposite the side of pig hit (traveling right, hit left side)
+          if( (p.x - x) * dx >= 0){ 
+            dx *= -1 * inelastic;
+            dy *= -1 * inelastic;
+          }
+          //ball traveling right and hit right side of pig, or left and left
+          else
+            dy *= -1;
+        }
+      }
+    }
+  }
   void update() {
     if (!inFloor) {
       //collision();
