@@ -79,6 +79,9 @@
 +2017-06-01
 +Andrew - implemented better method for Blocks that hit the floor, but a Block that collides with one that's on the floor will make em go whoosh
 +Jason - initial implementation of stack of points/heapsort for highest scores
++==============================================================
++2017-06-04
++Andrew - implemented health variables for blocks and pigs (new class!) that get decremented on collisions
 
 
 
