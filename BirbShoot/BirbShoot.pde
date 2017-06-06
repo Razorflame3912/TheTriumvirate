@@ -333,7 +333,7 @@ void draw() {
     }
     else {
       gameScreen = 2;
-      b = new RedBirb();
+      birb = new RedBirb();
       pointsHistory.push(points);
     }
   }
