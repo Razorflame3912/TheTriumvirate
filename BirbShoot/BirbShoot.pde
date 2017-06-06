@@ -22,6 +22,7 @@ int points;
 Stack<Integer> pointsHistory = new Stack();
 int hp;
 int whichLevel = 1;
+boolean callPointsHistoryMethod = false;
 Queue<Birb> birbQueue = new LinkedList();
 
 Level L;
@@ -50,7 +51,7 @@ void setup() {
   pig = loadImage("img/pig.png");
   pig.resize(40,40);
   gameScreen = 0;
-  points = 0;
+  points = 100;
   hp = 100;
   redBirb = new RedBirb();
   yellowBirb = new YellowBirb();
@@ -332,15 +333,8 @@ void draw() {
     }
     else {
       gameScreen = 2;
-      birb = new RedBirb();
-      if (pointsHistory.size() < 5) {
-        pointsHistory.push(points);
-      }
-      else {
-        pointsHistory.pop();
-        pointsHistory.push(points);
-      }
-      points = 0;
+      b = new RedBirb();
+      pointsHistory.push(points);
     }
   }
   
@@ -373,19 +367,31 @@ void gameScreen() {
 void gameOverScreen() {
   background(bg3);
   textSize(20);
-  text(points, 542, 175);
+  text(points, 522, 175);
   fill(0);
 }
 
 void matchHistoryScreen() {
-  int ctr = 75;
+  int ctr = 65;
+  int x = 0;
   background(bg4);
-  textSize(20);
-  while(!(pointsHistory.empty())) {
-    text(pointsHistory.pop(), ctr, 330);
+  while(x < pointsHistory.size() && x < 5) {
+    callPointsHistoryMethod = true;
+    textSize(20);
+    fill(255,255,255);
+    text(pointsHistory.peek(), ctr, 330);
     ctr += 120;
+    x+=1;
+    if (callPointsHistoryMethod) {
+      if (pointsHistory.peek() != null) {
+        pointsHistory.pop();
+        callPointsHistoryMethod = false;
+      }
+      else {
+        callPointsHistoryMethod = false;
+      }
+    }
   }
-  fill(255,255,255);
 }
 
 int increasePoints(int incr) {
