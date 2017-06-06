@@ -5,15 +5,18 @@ import java.util.Stack;
 ArrayList<Ball> balls;
 ArrayList<Block> blocks;
 ArrayList<Pig> pigs;
+Ball birbBall; //ball hidden behind a birb
+
 
 Birb redBirb;
 Birb yellowBirb;
 Birb blueBirb;
-Birb b;
+Birb birb;
 
+boolean birbLoaded; //whether there is a Birb in the slingshot
 float grav = .001;
 float inelastic = .5;
-float maxPull = 50;
+float maxPull = 25;
 int gameScreen;
 int points;
 Stack<Integer> pointsHistory = new Stack();
@@ -28,7 +31,7 @@ PImage slingshot;
 
 void setup() {
   size(800, 400);
-  frameRate(240);
+  frameRate(10);
   bg = loadImage("img/titlescreen.png");
   bg2 = loadImage("img/background.png");
   bg2.resize(800, 400);
@@ -55,34 +58,48 @@ void setup() {
   birbQueue.add(blueBirb);
   birbQueue.add(yellowBirb);
   birbQueue.add(redBirb);
-  b = birbQueue.peek(); 
+  birb = birbQueue.peek(); 
+  birbLoaded = true;
   
   balls = new ArrayList<Ball>();
   //for (int x=0; x < balls.size(); x++) {
   balls.add(new Ball());
-  balls.get(0).x = 550;
-  balls.get(0).y = 25;
+  //balls.get(0).x = 575;
+  balls.get(0).x = 575;
+  balls.get(0).y = 140;
   //balls.get(0).y = 1 + ((0%2+1));
   balls.get(0).dx = 0;
-  balls.get(0).dy = .01;
+  balls.get(0).dy = 5;
   //balls.get(0).dy = 2 + ((0%2) * -6);
   balls.get(0).mass = 1;
+
   
   blocks = new ArrayList<Block>();  
   //blocks.add(new Block(50, 300, 100, 325, 1));
-  blocks.add(new Block(50, 300, 400, 75,1) );
-  blocks.add(new Block(50, 300, 650, 400,-1) );
-  blocks.add(new Block(50, 300, 400, 400,-1) );
+  blocks.add(new Block(50, 250, 475, 175,1) );
+  blocks.add(new Block(50, 100, 575, 400,-1) );
+  blocks.add(new Block(50, 100, 475, 400,-1) );
+  blocks.add(new Block(50, 100, 675, 400,-1) );
+  //blocks.add(new Block(50, 100, 475, 225,-1) );
+  //blocks.add(new Block(50, 100, 675, 225,-1) );
+  //blocks.add(new Block(50, 150, 525,  0,1) );
+  
+  //breakBlock(blocks.get(0));
   
   L = new Level();
   L.addBlocks(blocks);
   
   pigs = new ArrayList<Pig>();
-  pigs.add(new Pig(650,320));
+  //pigs.add(new Pig(650,320));
+  
+  //birbBall = new Ball();
+  
 }
 
-//to remove a Block with zero health from the ArrayList of Blocks
+//to remove a Block with nonpositive health from the ArrayList of Blocks
 void breakBlock(Block target) {
+  if(birbLoaded)
+    return;
   int i = 0;
   while (blocks.get(i) != target)
     i += 1;
@@ -126,15 +143,16 @@ void removeBall(Ball target){
 }
 
 void mouseDragged() {
-  b.drag();
+  birb.drag();
 }
 
 void mouseReleased() {
-  b.shoot();
+  birb.shoot();
+  //birbLoaded = false;
 }
 
 void mouseClicked() {
-  b.special();
+  birb.special();
 }
 
 void mousePressed() {
@@ -156,9 +174,10 @@ void mousePressed() {
 }
 
 void updateBirb() {
-  if (b.x < 0 || b.y < 0 || b.x > 775 || b.y > 375 || hp <= 0 ) {
+  if (birb.x < 0 || birb.y < 0 || birb.x > 775 || birb.y > 375 || hp <= 0 ) {
     birbQueue.remove();
-    b = birbQueue.peek();
+    birb = birbQueue.peek();
+    birbLoaded = true;
   }
 }
 
@@ -167,7 +186,7 @@ void repopulateBirbQueue() {
   birbQueue.add(blueBirb);
   birbQueue.add(yellowBirb);
   birbQueue.add(redBirb);
-  b = birbQueue.peek(); 
+  birb = birbQueue.peek(); 
 }
 
 void draw() {
@@ -181,6 +200,11 @@ void draw() {
     for (Ball ball : balls) {
     ball.collided = false;
   }
+  //print(birbLoaded);
+  //print(blocks.get(0).health + " ");
+  //print(blocks.get(0).fallingOver);
+  //print(blocks.get(1).reachedFloor());
+  //print(blocks.size());
   for (int i = balls.size() - 1; i > -1; i--) {
     Ball ball = balls.get(i);
     //fill(b.c);
@@ -211,12 +235,23 @@ void draw() {
     //print(bl.health + " ");
     //for(int i = 0;i < bl.subs.length - 1;i++)
     //bl.subs[i].stickMe(bl.subs[i],bl.subs[i+1]);
-
+    //print(bl.flatOnTheFloor);
+    
     if (bl.reachedFloor()) { //hit the floor
       for (Ball ball : bl.subs) {
         //b.y = height - b.rad;
-        ball.dy = 0; //stop passing through the floor oh my god
+        ball.dy = 0; //stop passing through the floor oh my god        
       }
+      //if u pass thru the floor for some dumb reason move back up
+      /* commented out because it doesn't work for some dumb reason
+      if (bl.subs[0].y > height){
+        float diff = bl.subs[0].y - height;
+        for (Ball ball : bl.subs) {
+          ball.y -= diff;
+        }
+      }
+      */
+      
       //print(bl.fallingOver);
       if (!bl.flatOnTheFloor) { //hit the floor but not horizontal yet
         bl.fallingOver = true; //keep falling over 
@@ -235,10 +270,11 @@ void draw() {
       }
       bl.fallOver(); //fall over a lil bit
     }
-
-    bl.update();
+    //else{
+      bl.update();
+    //}
   }
-
+  //print(" ");
 
   for (Block bl : blocks) {
     /*
@@ -287,13 +323,16 @@ void draw() {
 
   //L.loadBlocks();
   //translate(last.x - xcor,last.y - ycor);
-    if (b != null) {
-      b.move();
+    if (birb != null) {
+      birb.collision();
+      birb.move();
+      //birb.collision();
+      //birb.hitStuff();
       updateBirb();
     }
     else {
       gameScreen = 2;
-      b = new RedBirb();
+      birb = new RedBirb();
       if (pointsHistory.size() < 5) {
         pointsHistory.push(points);
       }

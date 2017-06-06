@@ -2,6 +2,7 @@ class Block {
   Ball[] subs;
   boolean fallingOver;
   boolean flatOnTheFloor;
+  //boolean atRest; //a block at rest will not be affected by gravity
   float health;
   Block() {
     subs = new Ball[1];
@@ -34,6 +35,7 @@ class Block {
     }
     fallingOver = false;
     flatOnTheFloor = false;
+    //atRest = false;
     health = 1000;
   }
 
@@ -231,6 +233,7 @@ class Block {
       if (subs[0].x == subs[subs.length - 1].x){ //block is vertical
         fallingOver = false;
         flatOnTheFloor = true;
+        //atRest = true;
         return;
       }
       
@@ -271,14 +274,16 @@ class Block {
   }//end fallOver
   void fallOverDamage()
   {
-    float len = subs.length * subs[0].rad;
-    float circumferenceOfCircularPathOfTheOuterMostBall = 2 * len * PI; //circ of the circle that has bl as its radius
-    //outermost ball is traveling at 1 degree per 1/frameRate seconds
-    float velocity = (1/circumferenceOfCircularPathOfTheOuterMostBall) / (1/frameRate);
-    //accelerates to a stop in a single frame
-    float a = velocity / (1/frameRate);
-    //f=ma, no mass variable for now
-    health -= abs(a); //abs just in case;
+    if(!birbLoaded){ //no health decrementation while stage is being set up
+      float len = subs.length * subs[0].rad;
+      float circumferenceOfCircularPathOfTheOuterMostBall = 2 * len * PI; //circ of the circle that has bl as its radius
+      //outermost ball is traveling at 1 degree per 1/frameRate seconds
+      float velocity = (1/circumferenceOfCircularPathOfTheOuterMostBall) / (1/frameRate);
+      //accelerates to a stop in a single frame
+      float a = velocity / (1/frameRate);
+      //f=ma, no mass variable for now
+      health -= abs(a); //abs just in case;
+    }
   }
     
     

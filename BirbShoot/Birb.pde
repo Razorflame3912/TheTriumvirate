@@ -1,4 +1,4 @@
-abstract class Birb{
+abstract class Birb extends Ball{
  
   //used to calculate amount of pullback
   final float initX;
@@ -29,6 +29,7 @@ abstract class Birb{
     launched = false;
     collided = false;
     specialed = false;
+    rad = 40;
   }
   
   void drag(){
@@ -101,6 +102,13 @@ abstract class Birb{
       dy += grav;
     x += dx;
     y += dy;
+    
+    /*
+    birbBall.x = x; 
+    birbBall.y = y;
+    birbBall.dx = dx; 
+    birbBall.dy = dy;
+    birbBall.collision();
     /*
     if (whichBirb == 0) {
       loadedBirb = loadImage("img/red_birb.png");
@@ -119,5 +127,22 @@ abstract class Birb{
     }
     */
   }
+  /*
+  void hitStuff(){
+    for(Ball ball : balls){
+      if(dist(x,y,ball.x,ball.y) < 25 + ball.rad){
+        balls.add(new Ball());
+        Ball birbBall = balls.get(balls.size() -1);
+        birbBall.x = x;
+        birbBall.y = y;
+        birbBall.dx = dx;
+        birbBall.dy = dy;
+        birbBall.collision();
+        balls.remove(balls.size() - 1);
+        return;
+      }
+    }
+  }
+  */
   abstract void special();
 }

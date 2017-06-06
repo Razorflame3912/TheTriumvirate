@@ -60,8 +60,10 @@ class Ball {
             if (inBlock && myBlock != b.myBlock && b.myBlock.subs[0].y - b.myBlock.subs[b.myBlock.subs.length - 1].y == 0) {
               //F = ma, decrement health based on velocity, which accelerates (or decelerates, for all you laymen) to zero
               //in a single frame, which takes 1/frameRate seconds
-              myBlock.health -= (sqrt( sq(dx) + sq(dy) ) ) / (1/frameRate); 
-              b.myBlock.health -= (sqrt( sq(dx) + sq(dy) ) ) / (1/frameRate);
+              if(!birbLoaded){ //eliminates problems where Blocks were colliding hundred of times while stacked
+                myBlock.health -= (sqrt( sq(dx) + sq(dy) ) ) / (1/frameRate); 
+                b.myBlock.health -= (sqrt( sq(dx) + sq(dy) ) ) / (1/frameRate);
+              }
               myBlock.fallingOver = true;
               myBlock.fallOver();            
               //stickMe(b,this);
@@ -74,9 +76,11 @@ class Ball {
             //else if(b.myBlock.flatOnTheFloor && b.myBlock.subs[0].x == b.myBlock.subs[b.myBlock.subs.length - 1].x){
             else if(b.myBlock.isVertical()){
               //decrementing health is the first step since dx and dy will be manipulated in the following lines
-              if(inBlock)
-                myBlock.health -= (sqrt( sq(dx) + sq(dy) ) ) / (1/frameRate);
-              b.myBlock.health -= (sqrt( sq(dx) + sq(dy) ) ) / (1/frameRate);
+              if(!birbLoaded){
+                if(inBlock)              
+                  myBlock.health -= (sqrt( sq(dx) + sq(dy) ) ) / (1/frameRate);
+                b.myBlock.health -= (sqrt( sq(dx) + sq(dy) ) ) / (1/frameRate);
+              }
               Block vert = b.myBlock;
               //vert.fallingOver = true;
               //vert.flatOnTheFloor = false;
@@ -137,14 +141,20 @@ class Ball {
               //}
               dx = (((mass-b.mass)/(mass+b.mass)) * dx ) + (((2*b.mass)/(mass+b.mass)) * b.dx) * inelastic;
               dy = (((mass-b.mass)/(mass+b.mass)) * dy ) + (((2*b.mass)/(mass+b.mass)) * b.dy) * inelastic;
+              //if (abs( (((mass-b.mass)/(mass+b.mass)) * dx ) + (((2*b.mass)/(mass+b.mass)) * b.dx) * inelastic - dxtemp) > 10)
+                //dx = (((mass-b.mass)/(mass+b.mass)) * dx ) + (((2*b.mass)/(mass+b.mass)) * b.dx) * inelastic;
+              //if (abs( (((mass-b.mass)/(mass+b.mass)) * dy ) + (((2*b.mass)/(mass+b.mass)) * b.dy) * inelastic - dytemp) > 10)
+                //dy = (((mass-b.mass)/(mass+b.mass)) * dy ) + (((2*b.mass)/(mass+b.mass)) * b.dy) * inelastic;  
               //health decrementation (is that a word?)
               //calculate change in velocity over time (acceleration)
               //time is one frame, which is 1 second over the frameRate
-              if (inBlock){
-                myBlock.health -= abs(sqrt( sq(dx) + sq(dy) ) - sqrt( sq(dxtemp) + sq(dytemp) )) / (1 / frameRate);
-              }
-              if (b.inBlock){
-                b.myBlock.health -= abs(sqrt( sq(dx) + sq(dy) ) - sqrt( sq(dxtemp) + sq(dytemp) )) / (1 / frameRate);
+              if(!birbLoaded){
+                if (inBlock){
+                  myBlock.health -= abs(sqrt( sq(dx) + sq(dy) ) - sqrt( sq(dxtemp) + sq(dytemp) )) / (1 / frameRate);
+                }
+                if (b.inBlock){
+                  b.myBlock.health -= abs(sqrt( sq(dx) + sq(dy) ) - sqrt( sq(dxtemp) + sq(dytemp) )) / (1 / frameRate);
+                }
               }
               if (!b.inFloor) {
                 b.dx = (((b.mass-mass)/(mass+b.mass)) * b.dx ) + (((2*mass)/(mass+b.mass)) * dxtemp) * inelastic;

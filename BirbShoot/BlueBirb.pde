@@ -7,7 +7,7 @@ class BlueBirb extends Birb {
   BlueBirb() {
     super();
     whichBirb = 1;
-    loadedBirb = blue;
+    //loadedBirb = blue;
   }
   //constructor for new BlueBirbs
   BlueBirb(float newx, float newy, float newdx, float newdy) {
@@ -32,7 +32,8 @@ class BlueBirb extends Birb {
       dy += grav;
     x += dx;
     y += dy;
-    image(loadedBirb, x, y);
+    //image(loadedBirb, x, y);
+    ellipse(x,y,rad,rad);
     //whichBirb = 1;  
     if ( up != null && down != null ) {
       up.move();
