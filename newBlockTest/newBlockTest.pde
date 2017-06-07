@@ -13,6 +13,12 @@ Level level;
 float grav = 0.1;
 float inelastic = 0.75;
 float maxPull = 50;
+//Game screens
+int gameScreen = 0;
+//booleans
+boolean resetGame = false;
+//Images
+PImage bg, bg2, bg3, bg4, red, blue, yellow, pig, slingshot;
 
 void setup() {
   size(800, 400);
@@ -21,6 +27,24 @@ void setup() {
   //blocks.add( new Block(400,450,400,400) );
   //levels = new DLList();
   //level = levels.get(0);
+  bg = loadImage("img/titlescreen.png");
+  bg2 = loadImage("img/background.png");
+  bg2.resize(800, 400);
+  bg3 = loadImage("img/gameoverscreen.png");
+  bg3.resize(800, 400);
+  bg4 = loadImage("img/matchhistoryscreen.png");
+  bg4.resize(800,400);
+  slingshot= loadImage("img/slingshot.png");
+  slingshot.resize(100, 100);
+  blue = loadImage("img/blue_birb.png");
+  blue.resize(40, 40);
+  red = loadImage("img/red_birb.png");
+  red.resize(50, 50);
+  yellow = loadImage("img/yellow_birb.png");
+  yellow.resize(50, 50);
+  pig = loadImage("img/pig.png");
+  pig.resize(40,40);
+  gameScreen = 0;
   levelNode = new DLLNode( new Level(1), null, null);
   //levels.add( new Level() );
   level = levelNode.getCargo();
@@ -39,6 +63,24 @@ void setup() {
   //birb = new RedBirb();
   
   nextLevel();
+}
+
+void mousePressed() {
+  if (mouseX > 310 && mouseX < 495 && mouseY > 175 && mouseY < 250 
+    && gameScreen == 0) {
+    gameScreen = 1;
+  }
+  if (mouseX > 365 && mouseX < 435 && mouseY < 391 && mouseY > 345 
+    && gameScreen == 0) {
+    gameScreen = 3;
+  }
+  if (mouseX > 355 && mouseX < 450 && mouseY > 260 && mouseY < 317 && gameScreen == 2) {
+    gameScreen = 0;
+  }
+  
+  if (mouseX > 675 && mouseX < 760 && mouseY > 22 && mouseY < 88 && gameScreen == 3) {
+    gameScreen = 0;
+  }
 }
 
 void mouseDragged() {
@@ -90,6 +132,17 @@ void draw() {
   
   //prevLevel();
 }
+
+int decreaseHealth(int incr) {
+  birbQueue.peek().hp -= incr;
+  return birbQueue.peek().hp;
+}
+
+void updateBirb() {
+  if ((birbQueue.peek().x < 0 || birbQueue.peek().y < 0 || birbQueue.peek().x > 775 || birbQueue.peek().y > 375 || 
+  birbQueue.peek().hp <= 0) && birbQueue.peek() != null ) {
+    birbQueue.remove();
+ }
 
 void nextLevel() {
   levelNode = levelNode.getNext();
