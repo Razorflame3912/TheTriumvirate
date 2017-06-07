@@ -197,7 +197,7 @@ void draw() {
     for (Pig p : pigs){
       image(pig,p.x,p.y);
     }
-    if(birb != null){
+    if(birb != null && pigs.size() != 0){
       birb.move();
       birb.hitBlock();
       birb.hitPig();
@@ -230,7 +230,7 @@ void draw() {
     */
     else {
       if (pigs.size() == 0) {
-        gameScreen = 2;
+        gameScreen = 4;
         callRepopulateMethod = true;
         if (callRepopulateMethod) {
           repopulateBirbQueue();
@@ -240,7 +240,7 @@ void draw() {
       }
       
       else {
-        gameScreen = 4;
+        gameScreen = 2;
         callRepopulateMethod = true;
         if (callRepopulateMethod) {
           repopulateBirbQueue();
