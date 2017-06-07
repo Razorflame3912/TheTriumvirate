@@ -187,7 +187,10 @@ void draw() {
 
     for (Block bl : blocks) {
       bl.update();
-      rect(bl.left, bl.y, bl.xDim, bl.yDim);
+      woodblock.resize((int) bl.xDim, (int) bl.yDim);
+      iceblock.resize((int) bl.xDim, (int) bl.yDim);
+      stoneblock.resize((int) bl.xDim, (int) bl.yDim);
+      image(woodblock, bl.left, bl.y);
     }
     if(birb != null){
       birb.move();
