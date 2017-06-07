@@ -23,6 +23,8 @@ Stack<Integer> pointsHistory = new Stack();
 int hp;
 int whichLevel = 1;
 boolean callPointsHistoryMethod = false;
+boolean callPointsHistoryMethod = false;
+boolean callRepopulateMethod = false;
 Queue<Birb> birbQueue = new LinkedList();
 
 Level L;
@@ -159,6 +161,11 @@ void mouseClicked() {
 void mousePressed() {
   if (mouseX > 310 && mouseX < 495 && mouseY > 175 && mouseY < 250 
     && gameScreen == 0) {
+    resetGame = true;
+    if (resetGame) {
+      setup();
+      resetGame = false;
+    }
     gameScreen = 1;
   }
   if (mouseX > 365 && mouseX < 435 && mouseY < 391 && mouseY > 345 
@@ -183,7 +190,6 @@ void updateBirb() {
 }
 
 void repopulateBirbQueue() {
-  blueBirb = new BlueBirb();
   birbQueue.add(blueBirb);
   birbQueue.add(yellowBirb);
   birbQueue.add(redBirb);
@@ -333,7 +339,11 @@ void draw() {
     }
     else {
       gameScreen = 2;
-      birb = new RedBirb();
+      callRepopulateMethod = true;
+      if (callRepopulateMethod) {
+        repopulateBirbQueue();
+        callPointsHistoryMethod = false;
+      }
       pointsHistory.push(points);
     }
   }
@@ -377,14 +387,13 @@ void matchHistoryScreen() {
   background(bg4);
   while(x < pointsHistory.size() && x < 5) {
     callPointsHistoryMethod = true;
-    textSize(20);
-    fill(255,255,255);
-    text(pointsHistory.peek(), ctr, 330);
-    ctr += 120;
-    x+=1;
     if (callPointsHistoryMethod) {
       if (pointsHistory.peek() != null) {
-        pointsHistory.pop();
+        textSize(20);
+        text(pointsHistory.peek(), ctr, 330);
+        fill(255,255,255);
+        ctr += 150;
+        x+=1;
         callPointsHistoryMethod = false;
       }
       else {
