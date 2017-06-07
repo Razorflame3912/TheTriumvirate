@@ -23,7 +23,7 @@ Stack<Integer> pointsHistory = new Stack();
 int hp;
 int whichLevel = 1;
 boolean callPointsHistoryMethod = false;
-boolean callPointsHistoryMethod = false;
+boolean resetGame = false;
 boolean callRepopulateMethod = false;
 Queue<Birb> birbQueue = new LinkedList();
 
