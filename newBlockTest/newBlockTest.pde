@@ -103,14 +103,6 @@ void breakBlock(Block target) {
   blocks.remove(i);
 }
 
-void updateBirb() {
-  if (birb.x < 0 || birb.y < 0 || birb.x > 775 || birb.y > 375) {
-    birbQueue.remove();
-    birb = birbQueue.peek();
-    //birbLoaded = true;
-  }
-}
-
 
 void draw() {
   background(0);
@@ -139,10 +131,13 @@ int decreaseHealth(int incr) {
 }
 
 void updateBirb() {
-  if ((birbQueue.peek().x < 0 || birbQueue.peek().y < 0 || birbQueue.peek().x > 775 || birbQueue.peek().y > 375 || 
-  birbQueue.peek().hp <= 0) && birbQueue.peek() != null ) {
-    birbQueue.remove();
- }
+  if (birbQueue.peek() != null) {
+    if (birbQueue.peek().x < 0 || birbQueue.peek().y < 0 || birbQueue.peek().x > 775 || birbQueue.peek().y > 375 || 
+    birbQueue.peek().hp <= 0 ) {
+      birbQueue.remove();
+    }
+  }
+}
 
 void nextLevel() {
   levelNode = levelNode.getNext();

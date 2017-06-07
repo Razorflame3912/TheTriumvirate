@@ -13,8 +13,9 @@ class YellowBirb extends Birb {
       dy *= -0.5;
     }
     //only have gravity act when birb is in the air, not on the "slingshot"  
-    if (launched)
+    if (launched) {
       dy += grav;
+    }
 
     x += dx;
     y += dy;
@@ -26,12 +27,29 @@ class YellowBirb extends Birb {
 
   void special() {
     //unable to use special power after being hit or using it already
-    if (!launched || collided || specialed)
+    if (!launched || collided || specialed) {
       return;
+    }
     else {
       dx *= 3;
       dy *= 3;
       specialed = true;
     }
+  }
+
+  void nextLevel() {
+    levelNode = levelNode.getNext();
+    level = levelNode.getCargo();
+    blocks = level.blox;
+    pigs = level.porks;
+    birbQueue = level.angerys;
+  }
+
+  void prevLevel() {
+    levelNode = levelNode.getPrev();
+    level = levelNode.getCargo();
+    blocks = level.blox;
+    pigs = level.porks;
+    birbQueue = level.angerys;
   }
 }
