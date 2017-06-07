@@ -13,7 +13,7 @@ class Block{
     dy = .5;
     xDim = right - left;
     yDim = 50;
-    health = 1000;
+    health = 10000;
   }
 
   Block(float l, float r, float yCor,float yD) {

@@ -20,7 +20,7 @@ class YellowBirb extends Birb {
     y += dy;
 
 
-    image(loadedBirb, x, y);
+    //image(loadedBirb, x, y);
     whichBirb = 2;
   }
 

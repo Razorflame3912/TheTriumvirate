@@ -32,7 +32,9 @@ class BlueBirb extends Birb {
       dy += grav;
     x += dx;
     y += dy;
-    image(loadedBirb, x, y);
+    //image(loadedBirb, x, y);
+    fill(100);
+    ellipse(x,y,rad,rad);
     whichBirb = 1;  
     if ( up != null && down != null ) {
       up.move();

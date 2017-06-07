@@ -20,7 +20,8 @@ class RedBirb extends Birb {
     y += dy;
 
 
-    image(loadedBirb, x, y);
+    //image(loadedBirb, x, y);
+    ellipse(x,y,rad,rad);
     whichBirb = 0;
   }
 

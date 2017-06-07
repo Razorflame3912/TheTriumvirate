@@ -9,6 +9,8 @@ abstract class Birb{
   //velocity in x and y directions
   float dx;
   float dy;
+  //size
+  float rad;
   //image
   PImage loadedBirb;
   int whichBirb;
@@ -18,9 +20,11 @@ abstract class Birb{
   boolean collided;
   boolean specialed;
   
+  float mass; 
+  
   Birb(){
     x = 100;
-    y = 260;
+    y = height - 100;
     initX = x;
     initY = y;
     dx = 0;
@@ -29,7 +33,8 @@ abstract class Birb{
     launched = false;
     collided = false;
     specialed = false;
-    //rad = 40;
+    rad = 40;
+    mass = 1;
   }
   
   void drag(){
@@ -144,5 +149,38 @@ abstract class Birb{
     }
   }
   */
+  
+  void hitBlock(){
+    for(Block bl : blocks){
+      //is at right altitude to hit left or right side of a Block
+      if( (y + rad/2 > bl.y) && (y - rad/2 < bl.y + bl.yDim) ){
+        //passed into space occupied by the Block
+        if( (x + rad/2 > bl.left) && (x - rad/2 < bl.right) ){ 
+          //enough force to smash through Block and keep going
+          float resultantVector = sqrt( sq(dx) + sq(dy) );
+          if( (resultantVector * mass * frameRate) >= bl.health){ //acceleration = distance/time. In one second, a Birb travels (dx) distance (frameRate) times.
+            dx *= 0.2;
+            dy *= 0.2;
+            breakBlock(bl);
+          }
+          else{            
+            bl.health -= resultantVector * mass * frameRate;
+            if(y - rad/2 < bl.y || y + rad/2 > bl.y + bl.yDim)
+              dy *= -inelastic;
+            else
+              dx *= -inelastic; //change direction and lose some kinetic energy
+          }
+          return;
+        }
+      }
+      /*
+      //is at right x-coordinate to hit Block on its top or bottom sides
+      else if( (x + rad/2 > bl.left) && (x - rad/2 < bl.right) ){
+        if( (y + rad/2 > bl.y) && (y - rad/2 < bl.y + bl.yDim) ){
+          */
+    }
+  }
+            
+
   abstract void special();
 }
