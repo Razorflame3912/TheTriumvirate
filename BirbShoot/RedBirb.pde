@@ -3,7 +3,7 @@ class RedBirb extends Birb {
   RedBirb() {
     super();
     whichBirb = 0;
-    //loadedBirb = red;
+    loadedBirb = red;
   }
 
   void move() {
@@ -20,8 +20,7 @@ class RedBirb extends Birb {
     y += dy;
 
 
-    //image(loadedBirb, x, y);
-    ellipse(x,y,50,50);
+    image(loadedBirb, x, y);
     whichBirb = 0;
   }
 

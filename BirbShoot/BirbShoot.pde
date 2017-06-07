@@ -28,7 +28,7 @@ Queue<Birb> birbQueue = new LinkedList();
 DLLNode levelNode;
 Level level;
 
-PImage bg, bg2, bg3, bg4, red, blue, yellow, pig;
+PImage bg, bg2, bg3, bg4, red, blue, yellow, pig, woodblock, iceblock, stoneblock;
 PImage slingshot;
 
 void setup() {
@@ -51,6 +51,9 @@ void setup() {
   yellow.resize(50, 50);
   pig = loadImage("img/pig.png");
   pig.resize(40, 40);
+  woodblock = loadImage("img/woodblock.png");
+  iceblock = loadImage("img/iceblock.png");
+  stoneblock = loadImage("img/stoneblock.png");
   gameScreen = 0;
   points = 100;
   hp = 100;
@@ -66,9 +69,9 @@ void setup() {
   
   levelNode = new DLLNode( new Level(1), null, null);
   level = levelNode.getCargo();
-  level.blox.add( new Block() );
-  level.blox.add( new Block(300, 350, 300, 100) );
-  level.blox.add( new Block(550, 600, 300, 100) );
+  level.blox.add( new Block() ); //dimensions 300 x 50
+  level.blox.add( new Block(300, 350, 300, 100) ); //dimensions 50 x 100
+  level.blox.add( new Block(550, 600, 300, 100) ); //dimensions 50 x 100
   blocks = level.blox;
   pigs = level.porks;
   //birbQueue = level.angerys;
@@ -181,50 +184,50 @@ void draw() {
 
   if (gameScreen == 1) {
     gameScreen();
-  }
 
-  for (Block bl : blocks) {
-    bl.update();
-    rect(bl.left, bl.y, bl.xDim, bl.yDim);
-  }
-  if(birb != null){
-    birb.move();
-    birb.hitBlock();
-    updateBirb();
-  }
-/*
-  for (Block bl : blocks) {
-  }
-
-  int i = 0;
-  while (i < blocks.size()) {
-    if (blocks.get(i).health <= 0)
-      breakBlock(blocks.get(i));
-    else
-      i += 1;
-  }
-  i = 0;
-  while (i < pigs.size()) {
-    if (pigs.get(i).health <= 0)
-      killPig(pigs.get(i));
-    else
-      i += 1;
-  }
-
-  if (birb != null) {
-    birb.move();
-    //birb.hitStuff();
-    updateBirb();
-  } 
-  */
-  else {
-    gameScreen = 2;
-    callRepopulateMethod = true;
-    if (callRepopulateMethod) {
-      repopulateBirbQueue();
-      callPointsHistoryMethod = false;
+    for (Block bl : blocks) {
+      bl.update();
+      rect(bl.left, bl.y, bl.xDim, bl.yDim);
     }
-    pointsHistory.push(points);
+    if(birb != null){
+      birb.move();
+      birb.hitBlock();
+      updateBirb();
+    }
+  /*
+    for (Block bl : blocks) {
+    }
+  
+    int i = 0;
+    while (i < blocks.size()) {
+      if (blocks.get(i).health <= 0)
+        breakBlock(blocks.get(i));
+      else
+        i += 1;
+    }
+    i = 0;
+    while (i < pigs.size()) {
+      if (pigs.get(i).health <= 0)
+        killPig(pigs.get(i));
+      else
+        i += 1;
+    }
+  
+    if (birb != null) {
+      birb.move();
+      //birb.hitStuff();
+      updateBirb();
+    } 
+    */
+    else {
+      gameScreen = 2;
+      callRepopulateMethod = true;
+      if (callRepopulateMethod) {
+        repopulateBirbQueue();
+        callPointsHistoryMethod = false;
+      }
+      pointsHistory.push(points);
+    }
   }
 
 
@@ -260,7 +263,7 @@ void gameOverScreen() {
 }
 
 void matchHistoryScreen() {
-  int ctr = 65;
+  int ctr = 60;
   int x = 0;
   background(bg4);
   while (x < pointsHistory.size() && x < 5) {
