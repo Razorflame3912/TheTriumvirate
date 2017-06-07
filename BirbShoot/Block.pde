@@ -49,7 +49,7 @@ class Block{
   //returns whether a Block is under me (and touching)
   boolean underMe(Block bl){
     boolean ret = false;
-    ret = ( (bl.left >= left && bl.left <= right) || (bl.right >= left && bl.right <= right) );
+    ret = ( (bl.left >= left && bl.left <= right) || (bl.right >= left && bl.right <= right) || (bl.left <= left && bl.right >= right) );
     ret = (ret && ( bl.y <= y + yDim && bl.y >= y ) );
     return ret;
   }

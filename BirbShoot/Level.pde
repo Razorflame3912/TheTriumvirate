@@ -41,6 +41,9 @@ class Level{
         porks.add(pig);
       }
       */
+      porks.add(new Pig(450,200) );
+      porks.add(new Pig(400,300) );
+      porks.add(new Pig(500,300) );
       angerys.add(blueBirb);
       angerys.add(yellowBirb);
       angerys.add(redBirb);

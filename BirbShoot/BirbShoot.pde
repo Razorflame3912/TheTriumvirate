@@ -42,7 +42,7 @@ void setup() {
   bg4 = loadImage("img/matchhistoryscreen.png");
   bg4.resize(800, 400);
   bg5 = loadImage("img/gameoverscreenvictory.png");
-  bg5.resize(800,400);
+  bg5.resize(800, 400);
   slingshot= loadImage("img/slingshot.png");
   slingshot.resize(100, 100);
   blue = loadImage("img/blue_birb.png");
@@ -68,12 +68,15 @@ void setup() {
   birbQueue.add(redBirb);
   birb = birbQueue.peek(); 
   birbLoaded = true;
-  
+
   levelNode = new DLLNode( new Level(1), null, null);
   level = levelNode.getCargo();
   level.blox.add( new Block() ); //dimensions 300 x 50
   level.blox.add( new Block(300, 350, 300, 100) ); //dimensions 50 x 100
   level.blox.add( new Block(550, 600, 300, 100) ); //dimensions 50 x 100
+  level.blox.add( new Block(350, 400, 50, 150) );
+  level.blox.add( new Block(500, 550, 50, 150) );
+  level.blox.add( new Block(350, 550, 0, 50) );
   blocks = level.blox;
   pigs = level.porks;
   //birbQueue = level.angerys;
@@ -155,29 +158,32 @@ void updateBirb() {
 
 
 void repopulateBirbQueue() {
+  /*
   birbQueue.add(blueBirb);
-  birbQueue.add(yellowBirb);
-  birbQueue.add(redBirb);
+   birbQueue.add(yellowBirb);
+   birbQueue.add(redBirb);
+   */
+  birbQueue = level.angerys;
   birb = birbQueue.peek();
 }
 
 
 void nextLevel() {
- levelNode = levelNode.getNext();
- level = levelNode.getCargo();
- blocks = level.blox;
- pigs = level.porks;
- birbQueue = level.angerys;
- }
- 
- void prevLevel() {
- levelNode = levelNode.getPrev();
- level = levelNode.getCargo();
- blocks = level.blox;
- pigs = level.porks;
- birbQueue = level.angerys;
- }
- 
+  levelNode = levelNode.getNext();
+  level = levelNode.getCargo();
+  blocks = level.blox;
+  pigs = level.porks;
+  birbQueue = level.angerys;
+}
+
+void prevLevel() {
+  levelNode = levelNode.getPrev();
+  level = levelNode.getCargo();
+  blocks = level.blox;
+  pigs = level.porks;
+  birbQueue = level.angerys;
+}
+
 void draw() {
 
   if (gameScreen == 0) {
@@ -194,52 +200,54 @@ void draw() {
       stoneblock.resize((int) bl.xDim, (int) bl.yDim);
       image(woodblock, bl.left, bl.y);
     }
-    for (Pig p : pigs){
-      image(pig,p.x,p.y);
+    for (Pig p : pigs) {
+      image(pig, p.x, p.y);
     }
-    if(birb != null && pigs.size() != 0){
+    if (birb != null && pigs.size() != 0) {
       birb.move();
       birb.hitBlock();
       birb.hitPig();
       updateBirb();
     }
-  /*
+    /*
     for (Block bl : blocks) {
-    }
-  
-    int i = 0;
-    while (i < blocks.size()) {
-      if (blocks.get(i).health <= 0)
-        breakBlock(blocks.get(i));
-      else
-        i += 1;
-    }
-    i = 0;
-    while (i < pigs.size()) {
-      if (pigs.get(i).health <= 0)
-        killPig(pigs.get(i));
-      else
-        i += 1;
-    }
-  
-    if (birb != null) {
-      birb.move();
-      //birb.hitStuff();
-      updateBirb();
-    } 
-    */
+     }
+     
+     int i = 0;
+     while (i < blocks.size()) {
+     if (blocks.get(i).health <= 0)
+     breakBlock(blocks.get(i));
+     else
+     i += 1;
+     }
+     i = 0;
+     while (i < pigs.size()) {
+     if (pigs.get(i).health <= 0)
+     killPig(pigs.get(i));
+     else
+     i += 1;
+     }
+     
+     if (birb != null) {
+     birb.move();
+     //birb.hitStuff();
+     updateBirb();
+     } 
+     */
     else {
       if (pigs.size() == 0) {
         gameScreen = 4;
-        callRepopulateMethod = true;
-        if (callRepopulateMethod) {
-          repopulateBirbQueue();
-          callPointsHistoryMethod = false;
+        if (levelNode.getNext() != null)
+          nextLevel();
+        else {
+          callRepopulateMethod = true;
+          if (callRepopulateMethod) {
+            repopulateBirbQueue();
+            callPointsHistoryMethod = false;
+          }
         }
         pointsHistory.push(points);
-      }
-      
-      else {
+      } else {
         gameScreen = 2;
         callRepopulateMethod = true;
         if (callRepopulateMethod) {
@@ -259,7 +267,7 @@ void draw() {
   if (gameScreen == 3) {
     matchHistoryScreen();
   }
-  
+
   if (gameScreen == 4) {
     gameOverScreenVictory();
   }
