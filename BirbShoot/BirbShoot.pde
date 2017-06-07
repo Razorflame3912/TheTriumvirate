@@ -57,7 +57,7 @@ void setup() {
   iceblock = loadImage("img/iceblock.png");
   stoneblock = loadImage("img/stoneblock.png");
   gameScreen = 0;
-  points = 100;
+  points = 0;
   hp = 100;
 
   redBirb = new RedBirb();
@@ -320,6 +320,7 @@ void matchHistoryScreen() {
         callPointsHistoryMethod = false;
       }
     }
+    
   }
 }
 
