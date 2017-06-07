@@ -1,42 +1,42 @@
-import java.util.ArrayList;
+import java.util.Queue;
+import java.util.LinkedList;
 
-class Level {
-  ArrayList<Block> blocks;
-  ArrayList<Pig> pigs;
-
-  Level()
-  {
-    blocks = new ArrayList<Block>();
+class Level{
+  
+  ArrayList<Block> blox; //to differentiate between blocks in driver
+  ArrayList<Pig> porks; 
+  Queue<Birb> angerys; //birbs given for this level
+  
+  Birb redBirb = new RedBirb();
+  Birb blueBirb = new BlueBirb();
+  Birb yellowBirb = new YellowBirb();
+  
+  Pig pig = new Pig();
+  
+  Level(){
+    blox = new ArrayList<Block>();
+    porks = new ArrayList<Pig>();
+    angerys = new LinkedList<Birb>();
   }
   
-  void addBlocks(ArrayList<Block> blcks)
-  {
-    for (Block bl : blcks) {
-      blocks.add(bl);
+  //overloaded constructor, x determines what the level number is
+  Level(int x) {
+    this();
+    if (x == 1) {
+      for (int i = 0; i < 3; i++) {
+        porks.add(pig);
+      }
+      angerys.add(redBirb);
+      angerys.add(redBirb);
+      angerys.add(redBirb);
     }
-  }
-  void loadBlocks()
-  {
-    for (Block b : blocks)
-    {
-
-      Ball first = b.subs[0];
-      Ball last = b.subs[b.subs.length - 1];
-      float tanTheta = (last.x - first.x)/(first.y - last.y);
-      float theta = atan(tanTheta);
-      translate( last.x, last.y );
-      rotate(theta);
-      //float heck = last.x * tanTheta;
-      //translate(0,-heck);
-      //float xcor = last.x;
-      //float ycor = last.y;
-      //rotate(theta);
-      //float dist = dist(0,0,last.x,last.y);
-      //translate(dist * sin(theta) * tanTheta, -dist * sin(theta) );
-      translate( -last.x, -last.y );
-      rect(last.x - last.rad/2, last.y - last.rad/2, last.rad, last.rad * b.subs.length);
-      //rotate(-theta);
-      //translate(last.x - xcor,last.y - ycor);
+    if (x == 2) {
+      for (int i = 0; i < 4; i++) {
+        porks.add(pig);
+      }
+      angerys.add(blueBirb);
+      angerys.add(yellowBirb);
+      angerys.add(redBirb);
     }
   }
 }
