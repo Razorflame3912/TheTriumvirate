@@ -1,6 +1,11 @@
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.Stack;
+
 ArrayList<Block> blocks;
 ArrayList<Pig> pigs;
-ArrayList<Birb> birbs;
+Stack<Integer> pointsHistory = new Stack();
+Queue<Birb> birbQueue = new LinkedList();
 //DLList levels;
 DLLNode levelNode;
 Level level;
@@ -14,14 +19,14 @@ void setup(){
   //blocks.add( new Block(400,450,400,400) );
   //levels = new DLList();
   //level = levels.get(0);
-  levelNode = new DLLNode( new Level(), null, null);
+  levelNode = new DLLNode( new Level(1), null, null);
   //levels.add( new Level() );
   level = levelNode.getCargo();
   level.blox.add( new Block() );
   level.blox.add( new Block(400,450,400,400) );
   blocks = level.blox;
   
-  levelNode.setNext( new DLLNode( new Level(), levelNode, null) );
+  levelNode.setNext( new DLLNode( new Level(2), levelNode, null) );
   Level two = levelNode.getNext().getCargo();
   two.blox.add( new Block() );
   two.blox.add( new Block(400,450,400,200) );
@@ -43,7 +48,7 @@ void nextLevel(){
   level = levelNode.getCargo();
   blocks = level.blox;
   pigs = level.porks;
-  birbs = level.angerys;
+  birbQueue = level.angerys;
 }
 
 void prevLevel(){
@@ -51,5 +56,5 @@ void prevLevel(){
   level = levelNode.getCargo();
   blocks = level.blox;
   pigs = level.porks;
-  birbs = level.angerys;
+  birbQueue = level.angerys;
 }
