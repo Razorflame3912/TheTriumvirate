@@ -111,16 +111,21 @@ abstract class Birb {
       if( (y + rad/2 > bl.y) && (y - rad/2 < bl.y + bl.yDim) ){
         //passed into space occupied by the Block
         if( (x + rad/2 > bl.left) && (x - rad/2 < bl.right) ){ 
-          increasePoints(100);
+          collided = true; //can no longer use special move
           //enough force to smash through Block and keep going
           float resultantVector = sqrt( sq(dx) + sq(dy) );
           if( (resultantVector * mass * frameRate) >= bl.health){ //acceleration = distance/time. In one second, a Birb travels (dx) distance (frameRate) times.
+            increasePoints(100);
             dx *= 0.2;
             dy *= 0.2;
             breakBlock(bl);
+            return; 
           }
-          else{            
-            bl.health -= resultantVector * mass * frameRate;
+          else{
+            if (resultantVector * mass * frameRate > 100){
+              bl.health -= resultantVector * mass * frameRate;
+              increasePoints(100);
+            }
             if(y - rad/2 < bl.y + bl.yDim || y + rad/2 > bl.y){
               //y = bl.y - rad/2 - 1;
               dy *= -inelastic;
@@ -138,6 +143,27 @@ abstract class Birb {
       else if( (x + rad/2 > bl.left) && (x - rad/2 < bl.right) ){
         if( (y + rad/2 > bl.y) && (y - rad/2 < bl.y + bl.yDim) ){
           */
+    }
+  }
+  void hitPig() {
+    for (Pig p : pigs) {
+      if ( dist(x, y, p.x, p.y) <= rad/2 + p.rad/2) {
+        increasePoints(100);
+        float resultantVector = sqrt( sq(dx) + sq(dy) );
+        if ( resultantVector * mass * frameRate > p.health ) {
+          dx *= 0.2;
+          dy *= 0.2;
+          killPig(p);
+          return; //stop after killing the pig, avoid concurrent modification exception
+        } else {
+          p.health -= resultantVector * mass * frameRate;
+          if ( x <= p.x ) {
+            dx *= -1;
+          } else {
+            dy *= -1;
+          }
+        }
+      }
     }
   }
 

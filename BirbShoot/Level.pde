@@ -23,17 +23,24 @@ class Level{
   Level(int x) {
     this();
     if (x == 1) {
+      /*
       for (int i = 0; i < 3; i++) {
         porks.add(pig);
       }
+      */
+      porks.add(new Pig(450,200) );
+      porks.add(new Pig(400,300) );
+      porks.add(new Pig(500,300) );
       angerys.add(redBirb);
       angerys.add(redBirb);
       angerys.add(redBirb);
     }
     if (x == 2) {
+      /*
       for (int i = 0; i < 4; i++) {
         porks.add(pig);
       }
+      */
       angerys.add(blueBirb);
       angerys.add(yellowBirb);
       angerys.add(redBirb);

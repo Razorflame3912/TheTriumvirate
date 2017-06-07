@@ -14,6 +14,7 @@ class Pig {
     x = xcor;
     y = ycor;
   }
+
   /*    
    void getHit() {
    for(Ball b : balls) {

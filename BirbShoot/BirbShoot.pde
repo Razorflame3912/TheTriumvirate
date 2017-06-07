@@ -192,9 +192,13 @@ void draw() {
       stoneblock.resize((int) bl.xDim, (int) bl.yDim);
       image(woodblock, bl.left, bl.y);
     }
+    for (Pig p : pigs){
+      image(pig,p.x,p.y);
+    }
     if(birb != null){
       birb.move();
       birb.hitBlock();
+      birb.hitPig();
       updateBirb();
     }
   /*
@@ -252,7 +256,7 @@ void gameScreen() {
   text(points, 20, 20);
   background(bg2);
   image(slingshot, 50, 275);
-  image(pig, 650, 320);
+  //image(pig, 650, 320);
   textSize(20);
   text(points, 20, 30);
   fill(0);
