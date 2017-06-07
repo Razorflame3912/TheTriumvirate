@@ -8,4 +8,6 @@ This is a single-player recreation of the iconic mobile game, Angry Birds, coded
 ## Launch Instructions
 1. Open terminal.
 2. Change working directory to the directory containing TheTriumvirate repository.
-3. Run Woo.java by typing  **_processing Woo.pde_** in the terminal.
+3. Open the software's source code by typing  **_processing Woo.pde_** in the terminal.
+4. Processing should open up. Press Ctrl+R to run the game!
+
