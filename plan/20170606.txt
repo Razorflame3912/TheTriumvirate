@@ -1,0 +1,7 @@
+'TWAS THE NIGHT BEFORE THE DUE DATE
+PLANS FOR TONIGHT
+
+- Implement a new, simpler, WORKING physics system that will work to some degree.
+- Merge that physics system with our driver.
+- Fix any remaining bugs to be resolved.
+- Get this thing ready for demo'ing.

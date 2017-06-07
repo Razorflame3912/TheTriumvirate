@@ -5,37 +5,36 @@
 +pd 5
 +---------------------
 +ANGERY BIRBS!
-+
-+devlog
-+Use keyboard shortcut to jump to end,
-+ replicate entry template,
-+ modify appropriately.
-+
-+zone of reflection
-+Flesh out each category whenever necessary, appropriate.
-+ Need not be fully filled in until end of project,
-+ but best done as you go along.
-+
-+
+
+
 +/////////// Zone of Reflection \\\\\\\\\\\
 +------------------------------------------
 +OBSTACLES OVERCOME
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+wow we so BOSS bc...
++ Early on in development, our main driver was extremely laggy, because we were loading images under certain conditions, but during the draw() method, which was causing latency issues. We learned that the program must load any and all images, animations, or other resources on startup before proceeding.
++ Before it failed us, we overcame many obstacles in creating a working physics system, such as being able to simulate angular momentum without graphics bugs, and we had made so much progress over the course of two weeks until we sadly had to scrap it all. (See us in person for more details.)
 
 +UNRESOLVED ISSUES
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+ 
++We were never able to implement working physics into the main driver in time, which is something we are considerably upset about, especially since most of the work on the project was devoted to this cause.
+
 +COOL STUFF LEARNED
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
++Even through the failure of implementing physics, we learned a lot about the basics of creating a physics engine (and how hard it is). We also learned a lot more about Processing and importing images to make super sweet graphics!
++ We also learned about the process of basic game development, such as state variables and why games "load" in the first place(They do that when they need to load resources like audio, models, images, and animations!)
+
 +MID-DEVELOPMENT DESIGN CHANGES
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+ 
++Since the implementation of physics decided to be unfriendly to us in terms of finishing it before the deadline, we decided to make a much more simplified version of blocks that wasn't all that realistic, but handled the point values and "health" of blocks minus all of the physics calculations. Also due to time constraints, we decided to implement only one level for the sake of having a working product, but implementing multiple levels through a doubly linked list would have been the next step.
 
 +LESSONS LEARNED
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
++Programming a physics engine is HARD.
++Programming a physics engine is H A R D.
++Programming a physics engine is H  A  R  D.
++Sometimes you just need to be able to know when to scrap an idea/feature, regardless of how much blood, sweat, tears, and time you invested in trying to make it work. Sometimes, the more "childish" solution can really be your only option, and you need it just so you have something to show for.
++Mathematics can be very very useful and provide very elegant solutions to seemingly difficult problems.
+
 
 + ______   ______   __   __   __       ______   _______     
 +/_____/\ /_____/\ /_/\ /_/\ /_/\     /_____/\ /______/\    
@@ -52,13 +51,25 @@
 +Andrew - Birb subclasses
 +==============================================================
 +2017-05-21
-+Mansour - momentum with circles
++Mansour - Created momentum physics  with circles
 +Jason - implemented images
 +==============================================================
 +2017-05-22
 +Mansour, Andrew, Jason - discussed how to implement collision of bird/block/pigs.
++Mansour - Started rectangular momentum physics system using a Block class that had an array of Balls.
 +Andrew - various bugfixes to Birb.special() and BlueBirb graphics
 +Jason - removed loadImage() in some places to make game less laggy, pullback looks cleaner
++==============================================================
++2017-05-23
++Mansour - Continued working on rectangular momentum physics.
++==============================================================
++2017-05-24
++Mansour & Andrew & Jason - Fixed a bug where a Block would be oriented vertically and glitch out using the power of geometry :D
++==============================================================
++2017-05-25
++Mansour - Fixed a bug where if a Block were to be hit in the center, it would unnaturally accelerate.
++Andrew - Started working on the appearance of the Block class as a rectangle as opposed to several connected ellipses.
++Jason - added groundwork for points and a game over screen.
 +==============================================================
 +2017-05-27
 +Mansour - Optimized image loading such that BlueBirb split came with less lag
@@ -82,6 +93,15 @@
 +==============================================================
 +2017-06-04
 +Andrew - implemented health variables for blocks and pigs (new class!) that get decremented on collisions
++==============================================================
++2017-06-05
++Andrew & Mansour - Attempted to merge the working collisions of Block and Ball to the main driver file, ran into so many bugs that made everything way too problematic for reasonable development by the deadline.
++Jason - Worked on/fixed queue of Birbs.
++==============================================================
++2017-06-06
++Mansour - Tried some last minute fixes of the physics bugs, no success.
++Andrew - Created new, overly simplified system of physics to replace earlier complicated version for the sake of a working product. Merged his implementation to the main driver file siccessfully (I hope)
++Jason - Fixed a few bugs with Birb queue.
 
 
 
