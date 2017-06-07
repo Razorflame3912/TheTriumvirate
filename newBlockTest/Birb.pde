@@ -14,6 +14,7 @@ abstract class Birb{
   //image
   PImage loadedBirb;
   int whichBirb;
+  int hp;
   //state variables
   boolean pulled;
   boolean launched;
@@ -29,6 +30,7 @@ abstract class Birb{
     initY = y;
     dx = 0;
     dy = 0;
+    hp = 0;
     pulled = false;
     launched = false;
     collided = false;
