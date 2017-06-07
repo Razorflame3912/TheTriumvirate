@@ -28,7 +28,7 @@ Queue<Birb> birbQueue = new LinkedList();
 DLLNode levelNode;
 Level level;
 
-PImage bg, bg2, bg3, bg4, red, blue, yellow, pig, woodblock, iceblock, stoneblock;
+PImage bg, bg2, bg3, bg4, bg5, red, blue, yellow, pig, woodblock, iceblock, stoneblock;
 PImage slingshot;
 
 void setup() {
@@ -41,6 +41,8 @@ void setup() {
   bg3.resize(800, 400);
   bg4 = loadImage("img/matchhistoryscreen.png");
   bg4.resize(800, 400);
+  bg5 = loadImage("img/gameoverscreenvictory.png");
+  bg5.resize(800,400);
   slingshot= loadImage("img/slingshot.png");
   slingshot.resize(100, 100);
   blue = loadImage("img/blue_birb.png");
@@ -134,7 +136,7 @@ void mousePressed() {
     && gameScreen == 0) {
     gameScreen = 3;
   }
-  if (mouseX > 355 && mouseX < 450 && mouseY > 260 && mouseY < 317 && gameScreen == 2) {
+  if (mouseX > 355 && mouseX < 450 && mouseY > 260 && mouseY < 317 && (gameScreen == 2 || gameScreen == 4)) {
     gameScreen = 0;
   }
 
@@ -227,13 +229,25 @@ void draw() {
     } 
     */
     else {
-      gameScreen = 2;
-      callRepopulateMethod = true;
-      if (callRepopulateMethod) {
-        repopulateBirbQueue();
-        callPointsHistoryMethod = false;
+      if (pigs.size() == 0) {
+        gameScreen = 2;
+        callRepopulateMethod = true;
+        if (callRepopulateMethod) {
+          repopulateBirbQueue();
+          callPointsHistoryMethod = false;
+        }
+        pointsHistory.push(points);
       }
-      pointsHistory.push(points);
+      
+      else {
+        gameScreen = 4;
+        callRepopulateMethod = true;
+        if (callRepopulateMethod) {
+          repopulateBirbQueue();
+          callPointsHistoryMethod = false;
+        }
+        pointsHistory.push(points);
+      }
     }
   }
 
@@ -244,6 +258,10 @@ void draw() {
 
   if (gameScreen == 3) {
     matchHistoryScreen();
+  }
+  
+  if (gameScreen == 4) {
+    gameOverScreenVictory();
   }
 }
 
@@ -264,6 +282,13 @@ void gameScreen() {
 
 void gameOverScreen() {
   background(bg3);
+  textSize(20);
+  text(points, 522, 175);
+  fill(0);
+}
+
+void gameOverScreenVictory() {
+  background(bg5);
   textSize(20);
   text(points, 522, 175);
   fill(0);
